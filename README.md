@@ -47,8 +47,8 @@ SpendWise is an expense tracker app designed to help clients take control of the
 ## Ananthakrishnan krishnakumar
 13.	Users can set expenditure limits to predefined categories.
 14.	Users can create new categories within the app
-15.	Users will be able to see a pie chart of their spending combining all the categories
-16.	When adding an expense, the users will be able to set it as recurring and can choose the interval so that they won’t need to enter it periodically
+15.	Users can see a pie chart of their spending combining all the categories
+16.	Users can set an expence as recurring and can choose the interval so that they won’t need to enter it periodically
 
 
 
