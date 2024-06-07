@@ -1,0 +1,25 @@
+.fab-container {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000;
+  }
+  .mdl-dialog__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .hidden {
+    display: none;
+  }
+  .expense {
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+  }
+  .credit {
+    border: 2px solid lightgreen;
+  }
+  .debit {
+    border: 2px solid lightcoral;
+  }
