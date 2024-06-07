@@ -5,17 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spend Wise</title>
-    <link rel="stylesheet" href="./material.min.css">
-    <script src="./material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" src="css/onsenui.css">
-    <link rel="stylesheet" src="css/style.css">
+    <link rel="stylesheet" href="./css/material.min.css">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
-    Hello World from spendwise
+    <!-- Example content -->
+    <div style="height: 2000px; padding: 20px;">
+        <h1>Expense Tracker</h1>
+        <div id="expense-list">
+            <!-- Expenses will be added here -->
+        </div>
+        <p>Scroll down to see the Floating Action Button stay fixed in the bottom right corner.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+        <!-- Add more content as needed to make the page scrollable -->
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">add</i>
+        </button>
+    </div>
+
+    <!-- Dialog -->
+    <dialog class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Add Amount</h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="number" id="amount" required>
+                <label class="mdl-textfield__label" for="amount">Amount</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
+                    <input type="radio" id="credit" class="mdl-radio__button" name="transactionType" value="credit"
+                        required>
+                    <span class="mdl-radio__label">Credit</span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
+                    <input type="radio" id="debit" class="mdl-radio__button" name="transactionType" value="debit">
+                    <span class="mdl-radio__label">Debit</span>
+                </label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <select class="mdl-textfield__input" id="category" required>
+                    <option value=""></option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="learning">Learning</option>
+                    <option value="travel">Travel</option>
+                </select>
+                <label class="mdl-textfield__label" for="category">Category</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="description">
+                <label class="mdl-textfield__label" for="description">Description (optional)</label>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close">Cancel</button>
+            <button type="button" class="mdl-button">OK</button>
+        </div>
+    </dialog>
+
+    <script type="text/javascript" src="./script/app.js"></script>
+
 </body>
 
 </html>
