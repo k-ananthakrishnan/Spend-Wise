@@ -10,15 +10,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" /> -->
+
 </head>
 
 <body>
     <!-- Example content -->
-    <div style="height: 2000px; padding: 20px;">
+    <div>
         <h1>Expense Tracker</h1>
         <div id="expense-list">
             <!-- Expenses will be added here -->
         </div>
+
+        <div class="category">
+        <p style="font-size: 50px;margin:15px 15px 0px 15px">Categories <i id="addButton" class = "fa-solid fa-plus"></i></p>
+        <div id="category-container" class="category-container">
+        </div>
+    </div>
         <p>Scroll down to see the Floating Action Button stay fixed in the bottom right corner.</p>
         <p>More content...</p>
         <p>Even more content...</p>
@@ -28,7 +39,7 @@
     <!-- Floating Action Button -->
     <div class="fab-container">
         <button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">add</i>
+            <span class="material-icons">add</span>
         </button>
     </div>
 
@@ -71,7 +82,7 @@
         </div>
     </dialog>
 
-    <script type="text/javascript" src="./script/app.js"></script>
+    <script type="module" src="./script/app.js"></script>
 
 </body>
 
