@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
 
@@ -23,6 +24,7 @@
         <p>More content...</p>
         <p>Even more content...</p>
         <!-- Add more content as needed to make the page scrollable -->
+        <!-- Numeric Textfield with Floating Label -->
     </div>
 
     <!-- Floating Action Button -->
@@ -32,44 +34,43 @@
         </button>
     </div>
 
-    <!-- Dialog -->
     <dialog class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Add Amount</h4>
+        <h4 class="mdl-dialog__title">Add Expense</h4>
         <div class="mdl-dialog__content">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="number" id="amount" required>
-                <label class="mdl-textfield__label" for="amount">Amount</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield">
-                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
-                    <input type="radio" id="credit" class="mdl-radio__button" name="transactionType" value="credit"
-                        required>
-                    <span class="mdl-radio__label">Credit</span>
-                </label>
-                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
-                    <input type="radio" id="debit" class="mdl-radio__button" name="transactionType" value="debit">
-                    <span class="mdl-radio__label">Debit</span>
-                </label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <select class="mdl-textfield__input" id="category" required>
-                    <option value=""></option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="learning">Learning</option>
-                    <option value="travel">Travel</option>
-                </select>
-                <label class="mdl-textfield__label" for="category">Category</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="description">
-                <label class="mdl-textfield__label" for="description">Description (optional)</label>
-            </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="amount" required>
+            <label class="mdl-textfield__label" for="amount">Amount</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield">
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
+              <input type="radio" id="credit" class="mdl-radio__button" name="transactionType" value="credit" required>
+              <span class="mdl-radio__label">Credit</span>
+            </label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
+              <input type="radio" id="debit" class="mdl-radio__button" name="transactionType" value="debit">
+              <span class="mdl-radio__label">Debit</span>
+            </label>
+          </div>
+          <div id="category-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label hidden">
+            <select class="mdl-textfield__input" id="category">
+              <option value=""></option>
+              <option value="entertainment">Entertainment</option>
+              <option value="learning">Learning</option>
+              <option value="travel">Travel</option>
+            </select>
+            <label class="mdl-textfield__label" for="category">Category</label>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="description">
+            <label class="mdl-textfield__label" for="description">Description (optional)</label>
+          </div>
         </div>
         <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button close">Cancel</button>
-            <button type="button" class="mdl-button">OK</button>
+          <button type="button" class="mdl-button close">Cancel</button>
+          <button type="button" class="mdl-button">OK</button>
         </div>
-    </dialog>
+      </dialog>
 
     <script type="text/javascript" src="./script/app.js"></script>
 

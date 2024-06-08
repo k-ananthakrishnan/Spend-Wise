@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(250, 239, 255);
+}
 .fab-container {
     position: fixed;
     bottom: 16px;
@@ -18,8 +21,12 @@
     border-radius: 8px;
   }
   .credit {
-    border: 2px solid lightgreen;
+    border: 2px solid rgb(193, 255, 193);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .debit {
-    border: 2px solid lightcoral;
+    border: 2px solid rgb(255, 178, 178);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
