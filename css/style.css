@@ -2,7 +2,7 @@ body{
   margin: 0px;
   padding: 20px;
   font-family: sans-serif;
-  background-color: #ffffff;
+  background-color: rgb(250, 239, 255);
 }
 .fab-container {
     position: fixed;
