@@ -5,6 +5,12 @@ import { getFirestore, collection, addDoc, doc, updateDoc, getDocs, deleteDoc,or
 var dialog = document.querySelector('dialog');
 var showDialogButton = document.querySelector('#fab');
 var expenses = [];
+var addCategoryDialog = document.getElementById('add-category-dialog');
+var addCategoryButton = document.querySelector('#add-category-ok');
+var slider = document.getElementById('s1');
+var currentLimitText = document.getElementById('current-limit');
+var selectedCategoryId = null;
+
 
 if (! dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
@@ -77,24 +83,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Function to create and append a tile
-function createTile(iconClass, categoryName) {
-  const tile = document.createElement('div');
-  tile.classList.add('tile');
+// // Function to create and append a tile
+// function createTile(iconClass, categoryName) {
+//   const tile = document.createElement('div');
+//   tile.classList.add('tile');
 
-  const icon = document.createElement('i');
-  icon.className = `fa-solid ${iconClass}`;
-  tile.appendChild(icon);
+//   const icon = document.createElement('i');
+//   icon.className = `fa-solid ${iconClass}`;
+//   tile.appendChild(icon);
 
-  const category = document.createElement('p');
-  category.classList.add('category-name');
-  category.textContent = categoryName;
-  tile.appendChild(category);
+//   const category = document.createElement('p');
+//   category.classList.add('category-name');
+//   category.textContent = categoryName;
+//   tile.appendChild(category);
 
-  return tile;
-}
+//   return tile;
+// }
 
 let count = 0;
+
+
 
 // Function to load categories from Firestore and display them
 async function loadCategories() {
@@ -106,9 +114,68 @@ async function loadCategories() {
     querySnapshot.forEach((doc) => {
     // console.log(count);
       const data = doc.data();
-      const tile = createTile(data.iconClass, data.categoryName);
+      const tile = createTile(data.iconClass, data.categoryName,doc.id, data.limit);
       categoryContainer.appendChild(tile);
       count++;
+  });
+}
+
+// Function to create and append a tile
+function createTile(iconClass, categoryName, categoryId, limit) {
+  const tile = document.createElement('div');
+  tile.classList.add('tile');
+  tile.dataset.categoryId = categoryId;
+  tile.dataset.limit = limit;
+
+  const icon = document.createElement('i');
+  icon.className = `fa-solid ${iconClass}`;
+  tile.appendChild(icon);
+
+  const category = document.createElement('p');
+  category.classList.add('category-name');
+  category.textContent = categoryName;
+  tile.appendChild(category);
+
+  const limitLabel = document.createElement('p');
+  limitLabel.classList.add('limit-label');
+  limitLabel.textContent = `Limit: $${limit}`;
+  tile.appendChild(limitLabel);
+
+  tile.addEventListener('click', () => {
+    openCategoryDialog(categoryId, categoryName, limit, tile);
+  });
+
+  return tile;
+}
+
+// Function to open the category dialog
+function openCategoryDialog(categoryId, categoryName, limit) {
+  selectedCategoryId = categoryId;
+  document.getElementById('category-dialog-title').textContent = categoryName;
+  slider.value = limit;
+  currentLimitText.textContent = `Current Limit: ${limit}`;
+  addCategoryDialog.style.display = 'block';
+}
+
+// Close the category dialog
+document.querySelector('.close-slide-dialog').addEventListener('click', () => {
+  addCategoryDialog.style.display = 'none';
+});
+
+// Handle category dialog 'OK' button click
+addCategoryButton.addEventListener('click', async () => {
+  const newLimit = slider.value;
+  currentLimitText.textContent = `Current Limit: ${newLimit}`;
+  await updateCategoryLimit(selectedCategoryId, newLimit);
+  addCategoryDialog.style.display = 'none';
+  await loadCategories();
+});
+
+// Update category limit in Firestore
+async function updateCategoryLimit(categoryId, newLimit) {
+  const categoryDocRef = doc(db, 'categories', categoryId);
+  await updateDoc(categoryDocRef, {
+    limit: newLimit
   });
 }
 
@@ -118,7 +185,8 @@ async function addCategory(iconClass, categoryName) {
       const docRef = await addDoc(collection(db, 'categories'), {
           iconClass: iconClass,
           categoryName: categoryName,
-          count: count+1
+          count: count+1,
+          limit:0
       });
       console.log("Document written with ID: ", docRef.id);
       // Reload categories to reflect the newly added category
@@ -131,12 +199,6 @@ async function addCategory(iconClass, categoryName) {
 // Add event listener for the Add Custom Tile button
 document.getElementById('addButton').addEventListener('click', function() {
   document.getElementById('formContainer').style.display = 'block';
-  // console.log("added category");
-  // addCategory('fa-bowl-food', 'Food');
-  // addCategory('fa-car', 'Travel');
-  // addCategory('fa-bag-shopping', 'Shopping');
-  // addCategory('fa-money-bills', 'Utilities');
-  // addCategory('fa-globe', 'Entertainment');
 });
 
 // Load categories when the DOM is fully loaded
@@ -162,4 +224,9 @@ document.getElementById('submitForm').addEventListener('click', async function()
 });
 document.getElementById('closeForm').addEventListener('click', function() {
   document.getElementById('formContainer').style.display = 'none';
+});
+
+// Update limit text when slider value changes
+slider.addEventListener('input', () => {
+  currentLimitText.textContent = `Current Limit: ${slider.value}`;
 });
