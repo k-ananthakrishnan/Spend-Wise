@@ -90,3 +90,74 @@ body{
   border-radius: 7px;
   box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
+
+#addButton{
+  transition: transform 0.3s ease;
+
+}
+#addButton:hover{
+  transform: rotate(90deg);
+}
+
+.tile:hover .fa-solid {
+  transition: transform 0.3s ease, color 0.9s ease;
+  animation: rotateRightLeft 1s ease-in-out;
+}
+
+@keyframes rotateRightLeft {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(10deg);
+  }
+  20% {
+    transform: rotate(13deg);
+  }
+  30% {
+    transform: rotate(10deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(-13deg);
+  }
+  70% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.form-container {
+  width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.closeForm {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.form-body {
+  margin-top: 10px;
+}

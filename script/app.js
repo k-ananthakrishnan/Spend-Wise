@@ -62,7 +62,7 @@ function displayExpense(expense) {
   expenseList.appendChild(expenseElement);
 }
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
   authDomain: "capstone-project-7ec2d.firebaseapp.com",
@@ -130,7 +130,7 @@ async function addCategory(iconClass, categoryName) {
 
 // Add event listener for the Add Custom Tile button
 document.getElementById('addButton').addEventListener('click', function() {
-
+  document.getElementById('formContainer').style.display = 'block';
   // console.log("added category");
   // addCategory('fa-bowl-food', 'Food');
   // addCategory('fa-car', 'Travel');
@@ -143,3 +143,23 @@ document.getElementById('addButton').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', async () => {
   await loadCategories();
 });;
+
+//Form actions
+document.getElementById('submitForm').addEventListener('click', async function() {
+  // const iconClass = document.getElementById('iconClass').value;
+  const categoryName = document.getElementById('categoryName').value;
+  const iconClass = "fa-tag";
+  if(!iconClass){
+    iconClass="fa-tag";
+  }
+  if (iconClass && categoryName) {
+      await addCategory(iconClass, categoryName);
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('categoryName').value = '';
+  } else {
+      alert('Please fill out both fields.');
+  }
+});
+document.getElementById('closeForm').addEventListener('click', function() {
+  document.getElementById('formContainer').style.display = 'none';
+});
