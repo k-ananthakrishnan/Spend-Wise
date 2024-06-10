@@ -13,6 +13,7 @@ var addCategoryDialog = document.getElementById('add-category-dialog');
 // Get the dialog and the FAB button start
 var dialog = document.querySelector('dialog');
 var showDialogButton = document.querySelector('#fab');
+var expenses = [];
 
 if (!dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
