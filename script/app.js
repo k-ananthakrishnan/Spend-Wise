@@ -133,6 +133,13 @@ async function loadCategories() {
       
       categoryContainer.appendChild(tile);
 
+      // adding optons
+    var categoryOptions = document.createElement('option');
+    categoryOptions.value = data.categoryName
+    categoryOptions.innerHTML = data.categoryName
+    const categoryDiv = document.getElementById("category")
+    categoryDiv.appendChild(categoryOptions)
+
       count++;
   });
 }
