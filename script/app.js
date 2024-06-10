@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-import { getFirestore, collection, addDoc, doc, updateDoc, getDocs, deleteDoc,orderBy,query } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
+import { addDoc, collection, doc, getDocs, getFirestore, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
 
 const addCategoryButton = document.getElementById('add-category-ok');
@@ -7,7 +7,6 @@ const addCategoryButton = document.getElementById('add-category-ok');
 var slider = document.getElementById('s1');
 var currentLimitText = document.getElementById('current-limit');
 let selectedCategoryId = 0;
-
 var addCategoryDialog = document.getElementById('add-category-dialog');
 
 

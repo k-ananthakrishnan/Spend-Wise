@@ -1,7 +1,7 @@
 {
     "name": "Spend Wise",
     "short_name": "SpendWise",
-    "start_url": "index.html",
+    "start_url": "login.html",
     "display": "standalone",
     "orientation": "portrait-primary"
   }

@@ -1,6 +1,6 @@
 body{
   margin: 0px;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: sans-serif;
   background-color: rgb(250, 239, 255);
 }
@@ -14,6 +14,7 @@ body{
     display: flex;
     flex-direction: column;
     gap: 16px;
+    /* margin: 50px; */
   }
   .hidden {
     display: none;

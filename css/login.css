@@ -1,0 +1,56 @@
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+  }
+  
+  
+  .container {
+    padding: 20px;
+    width: 90%;
+    max-width: 400px; /* Adjust max-width to your preference */
+    margin: auto;
+    text-align: center;
+    border: 2px solid;
+  }
+
+
+  
+  h1 {
+    color: #333;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+  }
+  
+  #login-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #1476cc;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  
+  
+  /* Media Queries */
+  @media screen and (max-width: 600px) {
+    .container {
+      width: 100%; /* Adjust width for smaller screens */
+      border: none; /* Remove border on smaller screens */
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  }
+  
