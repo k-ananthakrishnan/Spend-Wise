@@ -41,7 +41,7 @@
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
-      <button id="logout-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+      <button id="logout-btn-small" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         logout
       </button>
     </nav>
@@ -53,15 +53,14 @@
 
     <div class="main-contents">
 
-      <div id="expense-list">
-          <!-- div to add expense -->
-      </div>
-
       <div class="category">
       <p style="font-size: 50px;margin:15px 15px 0px 15px">Categories <i id="addButton" class = "fa-solid fa-plus"></i></p>
       <div id="category-container" class="category-container">
       </div>
   </div>
+  <div id="expense-list">
+    <!-- div to add expense -->
+</div>
   </div>
 
   <!-- Floating Action Button -->
@@ -90,10 +89,7 @@
     </div>
     <div id="category-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label hidden">
       <select class="mdl-textfield__input" id="category">
-        <!-- <option value=""></option>
-        <option value="entertainment">Entertainment</option>
-        <option value="learning">Learning</option>
-        <option value="travel">Travel</option> -->
+        <option value=""></option>
       </select>
       <label class="mdl-textfield__label" for="category">Category</label>
     </div>
@@ -126,7 +122,6 @@
           <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-category-ok">OK</button>
       </div>
   </div>
-  //
 
   <div id="formContainer" class="form-container">
       <h4 style="font-weight: bold;">Add Category</h4>
