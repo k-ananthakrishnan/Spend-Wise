@@ -1,13 +1,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, getDocs, deleteDoc,orderBy,query } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
+
+const addCategoryButton = document.getElementById('add-category-ok');
+// var selectedCategoryId = document.getElementById('add-category-btn');
+var slider = document.getElementById('s1');
+var currentLimitText = document.getElementById('current-limit');
+let selectedCategoryId = 0;
+
+var addCategoryDialog = document.getElementById('add-category-dialog');
+
+
 // Get the dialog and the FAB button start
 var dialog = document.querySelector('dialog');
 var showDialogButton = document.querySelector('#fab');
-var addCategoryDialog = document.getElementById('add-category-dialog');
-var showCategoryDialogButton = document.getElementById('add-category-btn');
-var expenses = [];
-var categories = ['entertainment', 'learning', 'travel'];
 
 if (!dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
