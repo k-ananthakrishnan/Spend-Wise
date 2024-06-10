@@ -13,17 +13,14 @@ if (!dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
 }
 
-// Show dialog on FAB click
 showDialogButton.addEventListener('click', function () {
   dialog.showModal();
 });
 
-// Close dialog on 'Cancel' button click
 dialog.querySelector('.close').addEventListener('click', function () {
   dialog.close();
 });
 
-// Show/Hide category field based on transaction type selection
 document.querySelectorAll('input[name="transactionType"]').forEach(function (radio) {
   radio.addEventListener('change', function () {
     var categoryField = document.getElementById('category-field');
@@ -37,21 +34,17 @@ document.querySelectorAll('input[name="transactionType"]').forEach(function (rad
   });
 });
 
-// Handle 'OK' button click
 dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener('click', function () {
-  // Validate mandatory fields
   var amount = document.getElementById('amount').value;
   var transactionType = document.querySelector('input[name="transactionType"]:checked');
   var categoryField = document.getElementById('category-field');
   var category = categoryField.querySelector('select').value;
 
-  // Check if amount is a valid number
   if (isNaN(amount) || amount === '') {
     alert('Please enter a valid number for the amount.');
     return;
   }
 
-  // Check if category is required and not selected
   if (transactionType && transactionType.value === 'debit' && !category) {
     alert('Please select a category for debit transactions.');
     return;
@@ -66,16 +59,13 @@ dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener(
       description: document.getElementById('description').value
     };
 
-    // Add expense to array
     expenses.push(expense);
 
-    // Display the expense on the home page
     displayExpense(expense);
 
-    // Clear the form fields
     resetForm();
 
-    dialog.close(); // Close the dialog after successful form submission
+    dialog.close();
   } else {
     alert('Please fill out all mandatory fields.');
   }
@@ -111,7 +101,6 @@ function resetForm() {
 }
 
 
-
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
@@ -126,24 +115,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// // Function to create and append a tile
-// function createTile(iconClass, categoryName) {
-//   const tile = document.createElement('div');
-//   tile.classList.add('tile');
-
-//   const icon = document.createElement('i');
-//   icon.className = `fa-solid ${iconClass}`;
-//   tile.appendChild(icon);
-
-//   const category = document.createElement('p');
-//   category.classList.add('category-name');
-//   category.textContent = categoryName;
-//   tile.appendChild(category);
-
-//   return tile;
-// }
-
 let count = 0;
 
 
@@ -159,7 +130,18 @@ async function loadCategories() {
     // console.log(count);
       const data = doc.data();
       const tile = createTile(data.iconClass, data.categoryName,doc.id, data.limit);
+      
       categoryContainer.appendChild(tile);
+
+
+      // // adding optons
+      // var categoryOptions = document.createElement('option');
+      // categoryOptions.value = categoryName
+      // const categoryDiv = document.getElementById("category")
+      // categoryDiv.appendChild(categoryOptions)
+      
+
+    
       count++;
   });
 }
