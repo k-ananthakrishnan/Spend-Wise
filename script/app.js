@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-import { addDoc, collection, doc, getDocs, getFirestore, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
-
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
 const addCategoryButton = document.getElementById('add-category-ok');
 // var selectedCategoryId = document.getElementById('add-category-btn');
@@ -76,6 +75,48 @@ dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener(
   }
 });
 
+async function addExpense(expense) {
+  try {
+    const docRef = await addDoc(collection(db, 'expenses'), expense);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+async function updateExpense(id, expense) {
+  try {
+    const expenseDoc = doc(db, 'expenses', id);
+    await updateDoc(expenseDoc, expense);
+    console.log("Document updated with ID: ", id);
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+}
+
+async function deleteExpense(id) {
+  try {
+    await deleteDoc(doc(db, 'expenses', id));
+    console.log("Document deleted with ID: ", id);
+  } catch (e) {
+    console.error("Error deleting document: ", e);
+  }
+}
+
+async function loadExpenses() {
+  const expenseList = document.getElementById('expense-list');
+  expenseList.innerHTML = '';
+  const q = query(collection(db, 'expenses'), orderBy('timestamp', 'desc'));
+  const querySnapshot = await getDocs(q);
+  expenses = [];
+  querySnapshot.forEach(doc => {
+    const expense = doc.data();
+    expense.id = doc.id;
+    expenses.push(expense);
+    displayExpense(expense);
+  });
+}
+
 function displayExpense(expense) {
   var expenseList = document.getElementById('expense-list');
   var expenseElement = document.createElement('div');
@@ -88,10 +129,35 @@ function displayExpense(expense) {
     <p><strong>Type:</strong> ${expense.transactionType}</p>
     ${expense.transactionType === 'debit' ? `<p><strong>Category:</strong> ${expense.category}</p>` : ''}
     <p><strong>Description:</strong> ${expense.description || 'N/A'}</p>
+    <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Edit</button>
+    <button class="delete-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Delete</button>
   `;
 
   expenseElement.innerHTML = expenseContent;
   expenseList.appendChild(expenseElement);
+
+  expenseElement.querySelector('.edit-btn').addEventListener('click', () => editExpense(expense));
+  expenseElement.querySelector('.delete-btn').addEventListener('click', async () => {
+    if (confirm('Are you sure you want to delete this expense?')) {
+      await deleteExpense(expense.id);
+      loadExpenses();
+    }
+  });
+}
+
+function editExpense(expense) {
+  selectedExpenseId = expense.id;
+  document.getElementById('dialog-title').textContent = 'Edit Expense';
+  document.getElementById('amount').value = expense.amount;
+  document.querySelector(`input[name="transactionType"][value="${expense.transactionType}"]`).checked = true;
+  document.getElementById('description').value = expense.description;
+  if (expense.transactionType === 'debit') {
+    document.getElementById('category-field').classList.remove('hidden');
+    document.getElementById('category').value = expense.category;
+  } else {
+    document.getElementById('category-field').classList.add('hidden');
+  }
+  dialog.showModal();
 }
 
 function resetForm() {
