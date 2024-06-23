@@ -6,151 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spend Wise</title>
     <link rel="stylesheet" href="./css/material.min.css">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="./script/login.js" defer type="module"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-
 </head>
 
 <body>
-
-
-
-
-<!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Expense Tracker</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <button id="logout-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-          Logout
-        </button>
-      </nav>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Expense Tracker</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <button id="logout-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Logout
+                    </button>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <button id="logout-btn-small" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    Logout
+                </button>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <div class="main-contents">
+                    <div class="category">
+                        <p class="category-title">Categories <i id="addButton" class="fa-solid fa-plus"></i></p>
+                        <div id="category-container" class="category-container"></div>
+                    </div>
+                    <div id="expense-list">
+                        <!-- div to add expense -->
+                    </div>
+                </div>
+                <div class="fab-container">
+                    <button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+                <dialog class="mdl-dialog">
+                    <h4 class="mdl-dialog__title">Add Expense</h4>
+                    <div class="mdl-dialog__content">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="number" min="0" max="10000000000" id="amount" required>
+                            <label class="mdl-textfield__label" for="amount">Amount</label>
+                            <span class="mdl-textfield__error">Input is not a number!</span>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
+                                <input type="radio" id="credit" class="mdl-radio__button" name="transactionType" value="credit" required>
+                                <span class="mdl-radio__label">Credit</span>
+                            </label>
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
+                                <input type="radio" id="debit" class="mdl-radio__button" name="transactionType" value="debit">
+                                <span class="mdl-radio__label">Debit</span>
+                            </label>
+                        </div>
+                        <div id="category-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label hidden">
+                            <select class="mdl-textfield__input" id="category">
+                                <option value=""></option>
+                            </select>
+                            <label class="mdl-textfield__label" for="category">Category</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="description">
+                            <label class="mdl-textfield__label" for="description">Description (optional)</label>
+                        </div>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancel</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">OK</button>
+                    </div>
+                </dialog>
+                <div id="add-category-dialog" class="floating-dialog">
+                    <h4 id="category-dialog-title">Category Name</h4>
+                    <h5>Set Limit</h5>
+                    <div style="width: 100%;">
+                        <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="0" max="1000" value="100">
+                    </div>
+                    <div>
+                        <span>0</span>
+                        <span style="float: right;">1000</span>
+                    </div>
+                    <p id="current-limit">Current Limit: 100</p>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button close-slide-dialog">Cancel</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-category-ok">OK</button>
+                    </div>
+                </div>
+                <div id="formContainer" class="form-container">
+                    <h4 style="font-weight: bold;">Add Category</h4>
+                    <div class="form-body">
+                        <h6 for="categoryName">Category Name:</h6>
+                        <input type="text" class="mdl-textfield__input" id="categoryName" placeholder="Enter category name"><br><br>
+                        <div>
+                            <button id="submitForm" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">ADD</button>
+                            <button id="closeForm" class="mdl-button close">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-    <nav class="mdl-navigation">
-      <button id="logout-btn-small" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-        logout
-      </button>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-      <!-- Your content goes here -->
-    
-
-    <div class="main-contents">
-
-      <div class="category">
-      <p style="font-size: 50px;margin:15px 15px 0px 15px">Categories <i id="addButton" class = "fa-solid fa-plus"></i></p>
-      <div id="category-container" class="category-container">
-      </div>
-  </div>
-  <div id="expense-list">
-    <!-- div to add expense -->
-</div>
-  </div>
-
-  <!-- Floating Action Button -->
-<div class="fab-container">
-  <button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-    <i class="material-icons">add</i>
-  </button>
-</div>
-<dialog class="mdl-dialog">
-  <h4 class="mdl-dialog__title">Add Expense</h4>
-  <div class="mdl-dialog__content">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="number" min="0" max="10000000000" id="amount" required>
-      <label class="mdl-textfield__label" for="amount">Amount</label>
-      <span class="mdl-textfield__error">Input is not a number!</span>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield">
-      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
-        <input type="radio" id="credit" class="mdl-radio__button" name="transactionType" value="credit" required>
-        <span class="mdl-radio__label">Credit</span>
-      </label>
-      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
-        <input type="radio" id="debit" class="mdl-radio__button" name="transactionType" value="debit">
-        <span class="mdl-radio__label">Debit</span>
-      </label>
-    </div>
-    <div id="category-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label hidden">
-      <select class="mdl-textfield__input" id="category">
-        <option value=""></option>
-      </select>
-      <label class="mdl-textfield__label" for="category">Category</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="text" id="description">
-      <label class="mdl-textfield__label" for="description">Description (optional)</label>
-    </div>
-  </div>
-  <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancel</button>
-    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">OK</button>
-  </div>
-</dialog>
-
-
-
-  <div id="add-category-dialog" class="floating-dialog">
-      <h4 id="category-dialog-title">Category Name</h4>
-      <h5>Set Limit</h5>
-      <div style="width: 100%;">
-          <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="0" max="1000" value="100">
-      </div>
-      <div>
-          <span>0</span>
-          <span style="float: right;">1000</span>
-      </div>
-      <p id="current-limit">Current Limit: 100</p>
-      <div class="mdl-dialog__actions">
-          <button type="button" class="mdl-button close-slide-dialog">Cancel</button>
-          <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-category-ok">OK</button>
-      </div>
-  </div>
-
-  <div id="formContainer" class="form-container">
-      <h4 style="font-weight: bold;">Add Category</h4>
-
-  <div class="form-body">
-      <h6 for="categoryName">Category Name:</h6>
-      <input type="text" class="mdl-textfield__input" id="categoryName" placeholder="Enter category name"><br><br>
-      <div>
-          <button id="submitForm" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">ADD</button>
-          <button id="closeForm" class="mdl-button close">CLOSE</button>
-      </div>
-  </div>
-</div>
-    
-    
-    
-    
-    </div>
-  </main>
-</div>
-
-
-
-
-
-    
-
     <script type="module" src="./script/app.js"></script>
-
 </body>
 
 </html>

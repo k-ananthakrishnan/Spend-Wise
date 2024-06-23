@@ -1,14 +1,25 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 import { addDoc, collection, doc, getDocs, getFirestore, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
+  authDomain: "capstone-project-7ec2d.firebaseapp.com",
+  databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
+  projectId: "capstone-project-7ec2d",
+  storageBucket: "capstone-project-7ec2d.appspot.com",
+  messagingSenderId: "734534479783",
+  appId: "1:734534479783:web:fe0190f54699a23bbdd082"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const addCategoryButton = document.getElementById('add-category-ok');
-// var selectedCategoryId = document.getElementById('add-category-btn');
 var slider = document.getElementById('s1');
 var currentLimitText = document.getElementById('current-limit');
 let selectedCategoryId = 0;
 var addCategoryDialog = document.getElementById('add-category-dialog');
-
 
 // Get the dialog and the FAB button start
 var dialog = document.querySelector('dialog');
@@ -40,7 +51,7 @@ document.querySelectorAll('input[name="transactionType"]').forEach(function (rad
   });
 });
 
-dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener('click', function () {
+dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener('click', async function () {
   var amount = document.getElementById('amount').value;
   var transactionType = document.querySelector('input[name="transactionType"]:checked');
   var categoryField = document.getElementById('category-field');
@@ -59,32 +70,54 @@ dialog.querySelector('.mdl-dialog__actions button:last-child').addEventListener(
   if (amount && transactionType && (transactionType.value !== 'debit' || category)) {
     // Create expense object
     var expense = {
-      amount: amount,
+      amount: parseFloat(amount),
       transactionType: transactionType.value,
       category: transactionType.value === 'debit' ? category : '',
-      description: document.getElementById('description').value
+      description: document.getElementById('description').value,
+      timestamp: new Date()
     };
 
-    expenses.push(expense);
-
-    displayExpense(expense);
-
-    resetForm();
-
-    dialog.close();
+    try {
+      await addExpense(expense);
+      expenses.push(expense);
+      displayExpense(expense);
+      resetForm();
+      dialog.close();
+    } catch (error) {
+      console.error("Error adding expense: ", error);
+    }
   } else {
     alert('Please fill out all mandatory fields.');
   }
 });
 
+async function addExpense(expense) {
+  try {
+    await addDoc(collection(db, 'expenses'), expense);
+    console.log("Expense added to Firestore.");
+  } catch (error) {
+    console.error("Error adding expense to Firestore: ", error);
+  }
+}
+
+async function loadExpenses() {
+  const expenseList = document.getElementById('expense-list');
+  expenseList.innerHTML = ''; // Clear existing expenses
+  const q = query(collection(db, 'expenses'), orderBy('timestamp', 'desc'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const expense = doc.data();
+    displayExpense(expense);
+  });
+}
+
 function displayExpense(expense) {
-  var expenseList = document.getElementById('expense-list');
-  var expenseElement = document.createElement('div');
+  const expenseList = document.getElementById('expense-list');
+  const expenseElement = document.createElement('div');
   expenseElement.classList.add('expense');
   expenseElement.classList.add(expense.transactionType === 'credit' ? 'credit' : 'debit');
 
-  // Create the expense content based on whether it's credit or debit
-  var expenseContent = `
+  const expenseContent = `
     <p><strong>Amount:</strong> $${expense.amount}</p>
     <p><strong>Type:</strong> ${expense.transactionType}</p>
     ${expense.transactionType === 'debit' ? `<p><strong>Category:</strong> ${expense.category}</p>` : ''}
@@ -99,54 +132,30 @@ function resetForm() {
   document.getElementById('amount').value = '';
   document.getElementById('description').value = '';
   document.getElementById('category').value = '';
-  var transactionTypes = document.querySelectorAll('input[name="transactionType"]');
+  const transactionTypes = document.querySelectorAll('input[name="transactionType"]');
   transactionTypes.forEach(type => {
     type.checked = false;
   });
   document.getElementById('category-field').classList.add('hidden');
 }
 
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
-  authDomain: "capstone-project-7ec2d.firebaseapp.com",
-  databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
-  projectId: "capstone-project-7ec2d",
-  storageBucket: "capstone-project-7ec2d.appspot.com",
-  messagingSenderId: "734534479783",
-  appId: "1:734534479783:web:fe0190f54699a23bbdd082"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-let count = 0;
-
-
-
 // Function to load categories from Firestore and display them
 async function loadCategories() {
-
   const categoryContainer = document.getElementById('category-container');
   categoryContainer.innerHTML = ''; // Clear existing categories
   const q = query(collection(db, 'categories'), orderBy('count'));
   const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-    // console.log(count);
-      const data = doc.data();
-      const tile = createTile(data.iconClass, data.categoryName,doc.id, data.limit);
-      
-      categoryContainer.appendChild(tile);
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const tile = createTile(data.iconClass, data.categoryName, doc.id, data.limit);
+    categoryContainer.appendChild(tile);
 
-      // adding optons
-    var categoryOptions = document.createElement('option');
-    categoryOptions.value = data.categoryName
-    categoryOptions.innerHTML = data.categoryName
-    const categoryDiv = document.getElementById("category")
-    categoryDiv.appendChild(categoryOptions)
-
-      count++;
+    // Adding options
+    const categoryOptions = document.createElement('option');
+    categoryOptions.value = data.categoryName;
+    categoryOptions.innerHTML = data.categoryName;
+    const categoryDiv = document.getElementById("category");
+    categoryDiv.appendChild(categoryOptions);
   });
 }
 
@@ -212,47 +221,50 @@ async function updateCategoryLimit(categoryId, newLimit) {
 // Function to add a category to Firestore
 async function addCategory(iconClass, categoryName) {
   try {
-      const docRef = await addDoc(collection(db, 'categories'), {
-          iconClass: iconClass,
-          categoryName: categoryName,
-          count: count+1,
-          limit:0
-      });
-      console.log("Document written with ID: ", docRef.id);
-      // Reload categories to reflect the newly added category
-      await loadCategories();
+    const docRef = await addDoc(collection(db, 'categories'), {
+      iconClass: iconClass,
+      categoryName: categoryName,
+      count: (await getCategoryCount()) + 1,
+      limit: 0
+    });
+    console.log("Document written with ID: ", docRef.id);
+    await loadCategories();
   } catch (e) {
-      console.error("Error adding document: ", e);
+    console.error("Error adding document: ", e);
   }
 }
 
+// Function to get the current category count
+async function getCategoryCount() {
+  const querySnapshot = await getDocs(collection(db, 'categories'));
+  return querySnapshot.size;
+}
+
 // Add event listener for the Add Custom Tile button
-document.getElementById('addButton').addEventListener('click', function() {
+document.getElementById('addButton').addEventListener('click', function () {
   document.getElementById('formContainer').style.display = 'block';
 });
 
-// Load categories when the DOM is fully loaded
+// Load categories and expenses when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async () => {
   await loadCategories();
-});;
+  await loadExpenses();
+});
 
-//Form actions
-document.getElementById('submitForm').addEventListener('click', async function() {
-  // const iconClass = document.getElementById('iconClass').value;
+// Form actions
+document.getElementById('submitForm').addEventListener('click', async function () {
   const categoryName = document.getElementById('categoryName').value;
   const iconClass = "fa-tag";
-  if(!iconClass){
-    iconClass="fa-tag";
-  }
-  if (iconClass && categoryName) {
-      await addCategory(iconClass, categoryName);
-      document.getElementById('formContainer').style.display = 'none';
-      document.getElementById('categoryName').value = '';
+  if (categoryName) {
+    await addCategory(iconClass, categoryName);
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('categoryName').value = '';
   } else {
-      alert('Please fill out both fields.');
+    alert('Please fill out the category name.');
   }
 });
-document.getElementById('closeForm').addEventListener('click', function() {
+
+document.getElementById('closeForm').addEventListener('click', function () {
   document.getElementById('formContainer').style.display = 'none';
 });
 
