@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
+import { addDoc, collection, doc, getDocs, getFirestore, orderBy, query, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
 const addCategoryButton = document.getElementById('add-category-ok');
 var slider = document.getElementById('s1');
@@ -96,16 +95,6 @@ async function updateExpense(id, expense) {
   }
 }
 
-
-async function deleteExpense(id) {
-  try {
-    await deleteDoc(doc(db, 'expenses', id));
-    console.log("Document deleted with ID: ", id);
-  } catch (e) {
-    console.error("Error deleting document: ", e);
-  }
-}
-
 async function loadExpenses() {
   const expenseList = document.getElementById('expense-list');
   expenseList.innerHTML = '';
@@ -132,20 +121,13 @@ function displayExpense(expense) {
     ${expense.transactionType === 'debit' ? `<p><strong>Category:</strong> ${expense.category}</p>` : ''}
     <p><strong>Description:</strong> ${expense.description || 'N/A'}</p>
     <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Edit</button>
-    <button class="delete-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Delete</button>
-
+    
   `;
 
   expenseElement.innerHTML = expenseContent;
   expenseList.appendChild(expenseElement);
 
   expenseElement.querySelector('.edit-btn').addEventListener('click', () => editExpense(expense));
-  expenseElement.querySelector('.delete-btn').addEventListener('click', async () => {
-    if (confirm('Are you sure you want to delete this expense?')) {
-      await deleteExpense(expense.id);
-      loadExpenses();
-    }
-  });
 
 }
 
