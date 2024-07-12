@@ -204,19 +204,25 @@ function displayExpense(expense) {
 }
 
 function editExpense(expense) {
+
   selectedExpenseId = expense.id;
   document.getElementById('dialog-title').textContent = 'Edit Expense';
   document.getElementById('amount').value = expense.amount;
-  document.querySelector(`input[name="transactionType"][value="${expense.transactionType}"]`).checked = true;
-  document.getElementById('description').value = expense.description;
+  
   if (expense.transactionType === 'debit') {
+    document.getElementById('debit').checked = true;
     document.getElementById('category-field').classList.remove('hidden');
     document.getElementById('category').value = expense.category;
   } else {
+    document.getElementById('credit').checked = true;
     document.getElementById('category-field').classList.add('hidden');
   }
+
+
+  document.getElementById('description').value = expense.description;
   dialog.showModal();
 }
+
 
 // Function to create a tile element for a category with icon on the left
 function createTile(iconClass, categoryName, categoryId, limit) {
@@ -250,7 +256,7 @@ function createTile(iconClass, categoryName, categoryId, limit) {
 
   // Add click event listener to open dialog or perform action
   tile.addEventListener('click', () => {
-    openCategoryDialog(categoryId);
+    openCategoryDialog(categoryId, categoryName, limit);
   });
 
   return tile;
@@ -260,6 +266,7 @@ function createTile(iconClass, categoryName, categoryId, limit) {
 // Function to load categories and populate tiles
 async function loadCategories() {
   const categoryContainer = document.querySelector('.category-container');
+  const categorySelect = document.getElementById('category');
   categoryContainer.innerHTML = ''; // Clear the container
 
   const q = query(collection(db, 'categories'), orderBy('count'));
@@ -273,6 +280,10 @@ async function loadCategories() {
   let isRow1 = true; // Use this to toggle between rows
   querySnapshot.forEach((doc) => {
     const data = doc.data();
+    const option = document.createElement('option');
+    option.value = data.categoryName; // Use categoryName as both value and textContent
+    option.textContent = data.categoryName;
+    categorySelect.appendChild(option);
     const tile = createTile(data.iconClass, data.categoryName, doc.id, data.limit);
 
     if (isRow1) {
