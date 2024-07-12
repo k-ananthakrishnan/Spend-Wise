@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: sans-serif;
-  background-color: rgb(250, 239, 255);
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
 }
 
 .mdl-layout__header,
@@ -25,6 +26,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #6200ea;
 }
 
 .fab-container {
@@ -44,84 +46,162 @@ body {
   display: none;
 }
 
-.expense {
-  padding: 16px;
-  margin: 16px 0;
-  border-radius: 8px;
+ .credi, .debi {
+  padding: 6px 10px; /* Padding inside the element */
+  margin: 6px; /* Margin around the element */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light border */
+  background-color: #f0f0f0; /* Light background color */
+  /* display: inline-flex; Display as inline flex to align items vertically */
+  align-items: center; /* Center items vertically */
+  font-size: 14px; /* Font size */
+  line-height: 1.4; /* Line height for readability */
 }
 
-.credit {
-  margin: 10px;
-  border: 2px solid lightgreen;
+.expense {
+  padding: 5px;
+  margin: 5px 15px 5px 15px;
   background-color: #ffffff;
+  border: 0px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  position: relative; /* Position relative for absolute positioning */
+}
+.expense-amount-type {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+.expense-amount-type .credit {
+  color: #27ae60; /* Green for credit */
+}
+
+.expense-amount-type .debit {
+  color: #f14343; /* Red for debit */
+}
+
+
+.expense-category {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.expense-description {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+.credit {
+  border-color: #27ae60; /* Light green border */
 }
 
 .debit {
-  margin: 10px;
-  background-color: #ffffff;
-  border: 2px solid lightcoral;
+  border-color: #f14343; /* Light blue border */
 }
 
+p{
+  margin: auto;
+}
+
+
 .category-container {
-  margin: 0;
-  border-radius: 7px;
   display: flex;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  padding: 20px;
-  gap: 20px;
-  text-overflow: ellipsis;
+  padding: 10px; /* Add padding around the container */
+}
+
+.tile-row {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .tile {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
   background-color: #ffffff;
   border: 1px solid #ededed;
   border-radius: 7px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  width: 75px;
-  height: 85px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  overflow: hidden;
-  word-wrap: break-word;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .tile:hover {
-  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .fa-solid {
-  font-size: 35px;
+  font-size: 35px; 
   color: #9e71e7;
-  margin-bottom: 10px;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.fa-solid:active {
-  transform: scale(1.2);
+.btn-container {
+  position: absolute;
+  top: 10px; /* Adjust top position as needed */
+  right: 10px; /* Adjust right position as needed */
+  display: flex;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: 5px; /* Adjust margin between buttons */
+}
+
+.edit-btn .fa-pen,
+.delete-btn .fa-trash {
+  font-size: 18px; /* Adjust icon size */
+}
+
+.edit-btn {
+  color: #608afc; /* Edit icon color */
+}
+
+.delete-btn {
+  color: rgb(247, 83, 83); /* Delete icon color */
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  color: #4360f5; /* Hover color for icons */
+}
+
+.fa-pen {
+  color: #608afc; /* Edit icon color */
+}
+
+.fa-trash {
+  color: rgb(247, 83, 83); /* Delete icon color */
+}
+
+.icon-container {
+  flex: 0 0 auto; 
+  margin-right: 15px; 
+}
+
+.info-container {
+  flex: 1 1 auto; 
+  display: flex;
+  flex-direction: column;
 }
 
 .category-name {
-  font-size: 10px;
-  margin: 0;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0 0 1px 0;
+  font-weight: bold;
 }
 
-.category {
-  margin: 10px;
-  padding: 10px;
-  width: fit-content;
-  background-color: #ffffff;
-  border: 1px solid #ededed;
-  border-radius: 7px;
-  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
+.limit-label {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
 }
 
 #addButton {
@@ -183,29 +263,7 @@ body {
   }
 }
 
-.form-container {
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  background-color: rgb(255, 255, 255);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none;
-}
-
-.closeForm {
-  cursor: pointer;
-  font-size: 20px;
-}
-
-.form-body {
-  margin-top: 10px;
-}
-
+.form-container,
 .floating-dialog {
   width: 90%;
   max-width: 400px;
@@ -246,8 +304,7 @@ body {
   margin-left: 10px;
 }
 
-.limit-label {
-  font-size: 10px;
-  margin: 0;
-
+.closeForm {
+  cursor: pointer;
+  font-size: 20px;
 }
