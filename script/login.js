@@ -22,12 +22,14 @@ const provider = new GoogleAuthProvider();
 window.addEventListener("load", function () {
     const googleLoginButton = document.getElementById("login-btn");
     if (googleLoginButton) {
+        console.log("Login button found. Adding event listener.");
         googleLoginButton.addEventListener("click", function () {
+            console.log("Login button clicked. Initiating sign-in process.");
             signInWithPopup(auth, provider)
                 .then((result) => {
                     const credential = GoogleAuthProvider.credentialFromResult(result);
                     const user = result.user;
-                    console.log(user);
+                    console.log("Sign-in successful. User:", user);
 
                     // Save user data in localStorage or sessionStorage
                     sessionStorage.setItem("user", JSON.stringify(user));
@@ -37,23 +39,31 @@ window.addEventListener("load", function () {
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.error(`Error ${errorCode}: ${errorMessage}`);
+                    console.error(`Error during sign-in: ${errorCode}: ${errorMessage}`);
                 });
         });
+    } else {
+        console.error("Login button not found.");
     }
-});
 
-const logoutButton = document.getElementById("logout-btn");
-if (logoutButton) {
-    logoutButton.addEventListener("click", function () {
-        console.log("Logout button clicked");
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            sessionStorage.removeItem("user");
-            window.location.href = "login.html"; // Update the relative path if necessary
-        }).catch((error) => {
-            // An error happened.
-            console.error(error);
-        });
+    const logoutButtons = document.querySelectorAll("#logout-btn-large, #logout-btn-small");
+    logoutButtons.forEach(logoutButton => {
+        if (logoutButton) {
+            console.log("Logout button found. Adding event listener.");
+            logoutButton.addEventListener("click", function () {
+                console.log("Logout button clicked");
+                signOut(auth).then(() => {
+                    // Sign-out successful.
+                    console.log("Sign-out successful.");
+                    sessionStorage.removeItem("user");
+                    window.location.href = "./login.html"; // Update the relative path if necessary
+                }).catch((error) => {
+                    // An error happened.
+                    console.error("Error during sign-out:", error);
+                });
+            });
+        } else {
+            console.error("Logout button not found.");
+        }
     });
-}
+});
