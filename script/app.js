@@ -177,13 +177,19 @@ function displayExpense(expense) {
   expenseElement.classList.add(expense.transactionType === 'credit' ? 'credit' : 'debit');
 
   const expenseContent = `
-    <p><strong>Amount:</strong> $${expense.amount}</p>
-    <p><strong>Type:</strong> ${expense.transactionType}</p>
-    ${expense.transactionType === 'debit' ? `<p><strong>Category:</strong> ${expense.category}</p>` : ''}
-    <p><strong>Description:</strong> ${expense.description || 'N/A'}</p>
-    <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Edit</button>
-    <button class="delete-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-id="${expense.id}">Delete</button>
-  `;
+  <div class="expense">
+    <p class="expense-amount-type">
+      <strong>$${expense.amount} <span class="${expense.transactionType === 'credit' ? 'credit' : 'debit'}">${expense.transactionType.toUpperCase()}</span></strong>
+    </p>
+    ${expense.transactionType === 'debit' ? `<p class="expense-category"><strong>Category:</strong> ${expense.category}</p>` : ''}
+    <p class="expense-description"><strong>Description:</strong> ${expense.description || 'N/A'}</p>
+    <div class="btn-container">
+      <button class="edit-btn" data-id="${expense.id}"><i class="fa-solid fa-pen"></i></button>
+      <button class="delete-btn" data-id="${expense.id}"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  </div>
+`;
+
 
   expenseElement.innerHTML = expenseContent;
   expenseList.appendChild(expenseElement);
@@ -198,62 +204,106 @@ function displayExpense(expense) {
 }
 
 function editExpense(expense) {
+
   selectedExpenseId = expense.id;
   document.getElementById('dialog-title').textContent = 'Edit Expense';
   document.getElementById('amount').value = expense.amount;
-  document.querySelector(`input[name="transactionType"][value="${expense.transactionType}"]`).checked = true;
-  document.getElementById('description').value = expense.description;
+  
   if (expense.transactionType === 'debit') {
+    document.getElementById('debit').checked = true;
     document.getElementById('category-field').classList.remove('hidden');
     document.getElementById('category').value = expense.category;
   } else {
+    document.getElementById('credit').checked = true;
     document.getElementById('category-field').classList.add('hidden');
   }
+
+
+  document.getElementById('description').value = expense.description;
   dialog.showModal();
 }
 
-async function loadCategories() {
-  categoryContainer.innerHTML = '';
-  const q = query(collection(db, 'categories'), orderBy('count'));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    const tile = createTile(data.iconClass, data.categoryName, doc.id, data.limit);
-    categoryContainer.appendChild(tile);
 
-    const categoryOptions = document.createElement('option');
-    categoryOptions.value = data.categoryName;
-    categoryOptions.innerHTML = data.categoryName;
-    document.getElementById('category').appendChild(categoryOptions);
-
-    count++;
-  });
-}
-
+// Function to create a tile element for a category
 function createTile(iconClass, categoryName, categoryId, limit) {
   const tile = document.createElement('div');
   tile.classList.add('tile');
   tile.dataset.categoryId = categoryId;
   tile.dataset.limit = limit;
 
+  const iconContainer = document.createElement('div');
+  iconContainer.classList.add('icon-container');
+
   const icon = document.createElement('i');
   icon.className = `fa-solid ${iconClass}`;
-  tile.appendChild(icon);
+  iconContainer.appendChild(icon);
+
+  const infoContainer = document.createElement('div');
+  infoContainer.classList.add('info-container');
 
   const category = document.createElement('p');
   category.classList.add('category-name');
   category.textContent = categoryName;
-  tile.appendChild(category);
+  infoContainer.appendChild(category);
 
   const limitLabel = document.createElement('p');
   limitLabel.classList.add('limit-label');
   limitLabel.textContent = `Limit: $${limit}`;
-  tile.appendChild(limitLabel);
+  infoContainer.appendChild(limitLabel);
 
-  tile.addEventListener('click', () => openCategoryDialog(categoryId, categoryName, limit, tile));
+  tile.appendChild(iconContainer);
+  tile.appendChild(infoContainer);
+
+  // Add click event listener to open dialog or perform action
+  tile.addEventListener('click', () => {
+    openCategoryDialog(categoryId, categoryName, limit);
+  });
 
   return tile;
 }
+
+
+// Function to load categories and populate tiles
+async function loadCategories() {
+  const categoryContainer = document.querySelector('.category-container');
+  const categorySelect = document.getElementById('category');
+  categoryContainer.innerHTML = ''; 
+
+  const q = query(collection(db, 'categories'), orderBy('count'));
+  const querySnapshot = await getDocs(q);
+
+  const tileRow1 = document.createElement('div');
+  tileRow1.classList.add('tile-row');
+  const tileRow2 = document.createElement('div');
+  tileRow2.classList.add('tile-row');
+
+  let isRow1 = true;
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const option = document.createElement('option');
+    option.value = data.categoryName; 
+    option.textContent = data.categoryName;
+    categorySelect.appendChild(option);
+    const tile = createTile(data.iconClass, data.categoryName, doc.id, data.limit);
+
+    if (isRow1) {
+      tileRow1.appendChild(tile);
+    } else {
+      tileRow2.appendChild(tile);
+    }
+
+    isRow1 = !isRow1; 
+  });
+
+  categoryContainer.appendChild(tileRow1);
+  categoryContainer.appendChild(tileRow2);
+}
+
+// Add event listener for the Add Custom Tile button
+document.getElementById('addButton').addEventListener('click', function () {
+  document.getElementById('formContainer').style.display = 'block';
+})
+
 
 function openCategoryDialog(categoryId, categoryName, limit) {
   selectedCategoryId = categoryId;
@@ -410,4 +460,3 @@ function setupExpenseListener() {
     });
   });
 }
-
