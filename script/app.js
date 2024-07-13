@@ -224,7 +224,7 @@ function editExpense(expense) {
 }
 
 
-// Function to create a tile element for a category with icon on the left
+// Function to create a tile element for a category
 function createTile(iconClass, categoryName, categoryId, limit) {
   const tile = document.createElement('div');
   tile.classList.add('tile');
@@ -267,7 +267,7 @@ function createTile(iconClass, categoryName, categoryId, limit) {
 async function loadCategories() {
   const categoryContainer = document.querySelector('.category-container');
   const categorySelect = document.getElementById('category');
-  categoryContainer.innerHTML = ''; // Clear the container
+  categoryContainer.innerHTML = ''; 
 
   const q = query(collection(db, 'categories'), orderBy('count'));
   const querySnapshot = await getDocs(q);
@@ -277,11 +277,11 @@ async function loadCategories() {
   const tileRow2 = document.createElement('div');
   tileRow2.classList.add('tile-row');
 
-  let isRow1 = true; // Use this to toggle between rows
+  let isRow1 = true;
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     const option = document.createElement('option');
-    option.value = data.categoryName; // Use categoryName as both value and textContent
+    option.value = data.categoryName; 
     option.textContent = data.categoryName;
     categorySelect.appendChild(option);
     const tile = createTile(data.iconClass, data.categoryName, doc.id, data.limit);
@@ -292,7 +292,7 @@ async function loadCategories() {
       tileRow2.appendChild(tile);
     }
 
-    isRow1 = !isRow1; // Toggle to the other row
+    isRow1 = !isRow1; 
   });
 
   categoryContainer.appendChild(tileRow1);
@@ -460,4 +460,3 @@ function setupExpenseListener() {
     });
   });
 }
-

@@ -22,7 +22,6 @@ const provider = new GoogleAuthProvider();
 window.addEventListener("load", function () {
     const googleLoginButton = document.getElementById("login-btn");
     if (googleLoginButton) {
-        console.log("Login button found. Adding event listener.");
         googleLoginButton.addEventListener("click", function () {
             console.log("Login button clicked. Initiating sign-in process.");
             signInWithPopup(auth, provider)
@@ -34,7 +33,7 @@ window.addEventListener("load", function () {
                     // Save user data in localStorage or sessionStorage
                     sessionStorage.setItem("user", JSON.stringify(user));
 
-                    window.location.href = "./../index.html"; // Update the relative path if necessary
+                    window.location.href = "./../index.html"; 
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -43,22 +42,20 @@ window.addEventListener("load", function () {
                 });
         });
     } else {
-        console.error("Login button not found.");
+        //
     }
 
     const logoutButtons = document.querySelectorAll("#logout-btn-large, #logout-btn-small");
     logoutButtons.forEach(logoutButton => {
         if (logoutButton) {
-            console.log("Logout button found. Adding event listener.");
             logoutButton.addEventListener("click", function () {
                 console.log("Logout button clicked");
                 signOut(auth).then(() => {
                     // Sign-out successful.
                     console.log("Sign-out successful.");
                     sessionStorage.removeItem("user");
-                    window.location.href = "./login.html"; // Update the relative path if necessary
+                    window.location.href = "./login.html"; 
                 }).catch((error) => {
-                    // An error happened.
                     console.error("Error during sign-out:", error);
                 });
             });
