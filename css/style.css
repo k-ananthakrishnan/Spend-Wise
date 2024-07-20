@@ -4,7 +4,8 @@ body {
   background-color: rgb(250, 239, 255);
 }
 
-.mdl-layout__header, .mdl-layout__drawer {
+.mdl-layout__header,
+.mdl-layout__drawer {
   background-color: #6200ea;
   color: white;
 }
@@ -18,16 +19,23 @@ body {
 }
 
 .category-title {
-  font-size: 24px;
-  margin: 15px;
+  background-color: #27ae60;
+  padding: 5px 8px;
+  border-radius: 50px;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 20px 0px 0px 18px;
+  gap: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #6200ea;
 }
 
 .fab-container {
   position: fixed;
-  bottom: 16px;
+  bottom: 80px;
   right: 16px;
   z-index: 1000;
 }
@@ -42,50 +50,85 @@ body {
   display: none;
 }
 
-.expense {
-  padding: 16px;
-  margin: 16px 0;
-  border-radius: 8px;
+ .credi, .debi {
+  padding: 6px 10px; /* Padding inside the element */
+  margin: 6px; /* Margin around the element */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light border */
+  background-color: #f0f0f0; /* Light background color */
+  /* display: inline-flex; Display as inline flex to align items vertically */
+  align-items: center; /* Center items vertically */
+  font-size: 14px; /* Font size */
+  line-height: 1.4; /* Line height for readability */
 }
 
-.credit {
-  margin: 10px;
-  border: 2px solid lightgreen;
+.expense {
+  padding: 5px;
+  margin: 5px 15px 5px 15px;
   background-color: #ffffff;
+  border: 0px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  position: relative; /* Position relative for absolute positioning */
+}
+.expense-amount-type {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+.expense-amount-type .credit {
+  color: #27ae60; /* Green for credit */
+}
+
+.expense-amount-type .debit {
+  color: #f14343; /* Red for debit */
+}
+
+
+.expense-category {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.expense-description {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+.credit {
+  border-color: #27ae60; /* Light green border */
 }
 
 .debit {
-  margin: 10px;
-  background-color: #ffffff;
-  border: 2px solid lightcoral;
+  border-color: #f14343; /* Light blue border */
+}
+
+p{
+  margin: auto;
 }
 
 .category-container {
   margin: 0;
   border-radius: 7px;
   display: flex;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  padding: 20px;
-  gap: 20px;
-  text-overflow: ellipsis;
+  padding: 10px; /* Add padding around the container */
+}
+
+.tile-row {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .tile {
   background-color: #ffffff;
   border: 1px solid #ededed;
   border-radius: 7px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  width: 75px;
-  height: 85px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  overflow: hidden;
-  word-wrap: break-word;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .tile:hover {
@@ -98,9 +141,62 @@ body {
   margin-bottom: 10px;
   transition: transform 0.3s ease, color 0.3s ease;
 }
+.fa-plus{
+color: white;
+font-size: 18px; ;
+}
 
-.fa-solid:active {
-  transform: scale(1.2);
+.btn-container {
+  position: absolute;
+  top: 10px; /* Adjust top position as needed */
+  right: 10px; /* Adjust right position as needed */
+  display: flex;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: 5px; /* Adjust margin between buttons */
+}
+
+.edit-btn .fa-pen,
+.delete-btn .fa-trash {
+  font-size: 18px; /* Adjust icon size */
+}
+
+.edit-btn {
+  color: #608afc; /* Edit icon color */
+}
+
+.delete-btn {
+  color: rgb(247, 83, 83); /* Delete icon color */
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  color: #4360f5; /* Hover color for icons */
+}
+
+.fa-pen {
+  color: #608afc; /* Edit icon color */
+}
+
+.fa-trash {
+  color: rgb(247, 83, 83); /* Delete icon color */
+}
+
+.icon-container {
+  flex: 0 0 auto; 
+  margin-right: 15px; 
+}
+
+.info-container {
+  flex: 1 1 auto; 
+  display: flex;
+  flex-direction: column;
 }
 
 .category-name {
@@ -195,7 +291,7 @@ body {
 }
 
 .floating-dialog {
-  width: 90%;
+  width: 70%;
   max-width: 400px;
   padding: 20px;
   border-radius: 8px;
@@ -237,4 +333,3 @@ body {
   font-size: 10px;
   margin: 0;
 }
-
