@@ -46,142 +46,16 @@
                 style="margin-bottom: 8px;">
                 Logout
               </button>
-              <!-- PIECHART  -->
-              <button id="pie-chart-btn"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Pie Chart
-              </button>
-              <!-- PIECHART  -->
             </nav>
           </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                <div class="main-contents">
-                    <div class="category">
-                        <p class="category-title">Categories <i id="addButton" class="fa-solid fa-plus"></i></p>
-                        <div id="category-container" class="category-container"></div>
-                        <!-- PIECHART  -->
-                        <canvas id="pieChartCanvas" style="display: none;"></canvas>
-                        <button id="close-pie-chart-btn"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                            style="display: none; margin: 20px auto;">
-                            Close Pie Chart
-                        </button>
-                        <!-- PIECHART  -->
-                    </div>
-                    <div id="tab-content">
-                        <div id="categories-tab" class="tab">
-                            <!-- Content for Categories tab -->
-                            <div id="expense-list">
-                                <!-- Example tile -->
-                                <div class="tile">
-                                    <div class="icon-container">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </div>
-                                    <div class="info-container">
-                                        <p class="category-name">Category Name</p>
-                                        <p class="limit-label">Limit: $1000</p>
-                                    </div>
-                                    <div class="btn-container">
-                                        <button class="edit-btn" aria-label="Edit">
-                                            <i class="fas fa-pen"></i>
-                                        </button>
-                                        <button class="delete-btn" aria-label="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="transactions-tab" class="tab hidden">
-                            <!-- Content for Transactions tab -->
-                            <p>Transactions tab content</p>
-                        </div>
-                        <div id="pie-chart-tab" class="tab hidden">
-                            <!-- Content for Pie Chart tab -->
-                            <canvas id="myPieChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="fab-container">
-                    <button id="fab"
-                        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                        <i class="material-icons">add</i>
-                    </button>
-                </div>
-                <dialog class="mdl-dialog">
-                    <h4 id="dialog-title" class="mdl-dialog__title">Add Transaction</h4>
-                    <div class="mdl-dialog__content">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="number" min="0" max="10000000000" id="amount"
-                                required>
-                            <label class="mdl-textfield__label" for="amount">Amount</label>
-                            <span class="mdl-textfield__error">Input is not a number!</span>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit">
-                                <input type="radio" id="credit" class="mdl-radio__button" name="transactionType"
-                                    value="credit" required>
-                                <span class="mdl-radio__label">Credit</span>
-                            </label>
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit">
-                                <input type="radio" id="debit" class="mdl-radio__button" name="transactionType"
-                                    value="debit">
-                                <span class="mdl-radio__label">Debit</span>
-                            </label>
-                        </div>
-                        <div id="category-field"
-                            class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label hidden">
-                            <select class="mdl-textfield__input" id="category">
-                                <option value=""></option>
-                            </select>
-                            <label class="mdl-textfield__label" for="category">Category</label>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="description">
-                            <label class="mdl-textfield__label" for="description">Description (optional)</label>
-                        </div>
-                    </div>
-                    <div class="mdl-dialog__actions">
-                        <button type="button"
-                            class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancel</button>
-                        <button type="button"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">OK</button>
-                    </div>
-                </dialog>
-                <div id="add-category-dialog" class="floating-dialog">
-                    <h4 id="category-dialog-title">Category Name</h4>
-                    <h5>Set Limit</h5>
-                    <div style="width: 100%;">
-                        <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="0" max="1000" value="100">
-                    </div>
-                    <div>
-                        <span>0</span>
-                        <span style="float: right;">1000</span>
-                    </div>
-                    <p id="current-limit">Current Limit: 100</p>
-                    <div class="mdl-dialog__actions">
-                        <button type="button" class="mdl-button close-slide-dialog">Cancel</button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-                            id="add-category-ok">OK</button>
-                    </div>
-                </div>
-                <div id="formContainer" class="form-container">
-                    <h4 style="font-weight: bold;">Add Category</h4>
-                    <div class="form-body">
-                        <h6 for="categoryName">Category Name:</h6>
-                        <input type="text" class="mdl-textfield__input" id="categoryName"
-                            placeholder="Enter category name"><br><br>
-                        <div>
-                            <button id="submitForm" type="button"
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">ADD</button>
-                            <button id="closeForm" class="mdl-button close">CLOSE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+          <div class="tabs">
+            <a style="border-top: 2px solid rgb(0, 98, 255);" href="index.html" >Home</a>
+            <a href="category.html">Categories</a>
+            <a href="transactions.html" >Transactions</a>
+            <a href="statistics.html">Statistics</a>
+        </div>
     </div>
+
     <script type="module" src="./script/app.js"></script>
 </body>
 
