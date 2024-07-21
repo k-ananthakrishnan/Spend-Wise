@@ -329,6 +329,64 @@ async function compareExpenditures() {
   } else {
     document.getElementById('expenditure-comparison').textContent = `You have crossed $${difference.toFixed(2)} than your previous month expenditure`;
   }
+  renderExpenditureChart(currentMonthTotal, previousMonthTotal);
+}
+
+async function renderExpenditureChart() {  
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const year = now.getFullYear();
+
+  // Fetch expenses for the current and previous months
+  const previousMonthExpenses = await fetchExpensesByMonth(year, currentMonth - 1);
+  const currentMonthExpenses = await fetchExpensesByMonth(year, currentMonth);
+
+  // Calculate total expenditures
+  const previousMonthTotal = calculateTotalExpenditure(previousMonthExpenses);
+  const currentMonthTotal = calculateTotalExpenditure(currentMonthExpenses);
+
+  // Define data for the chart
+  const ctx = document.getElementById('expenditureChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [
+        new Date(year, currentMonth - 1, 1).toLocaleString('default', { month: 'long' }),
+        new Date(year, currentMonth, 1).toLocaleString('default', { month: 'long' })
+      ],
+      datasets: [
+        {
+          label: 'Expenses',
+          data: [
+            previousMonthTotal,
+            currentMonthTotal
+          ],
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          innerWidth: 10,
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Month'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Expenditure ($)'
+          }
+        }
+      }
+    }
+  });
 }
 
 
