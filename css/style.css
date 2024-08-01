@@ -404,3 +404,27 @@ font-size: 18px; ;
 .tab-content.active {
   display: block;
 }
+
+/* Container for the difference display */
+#difference-container {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+/* Style for the difference display text */
+#difference-display {
+  font-size: 2em; /* Adjust size as needed */
+  color: red; /* Dark color for text */
+  font-weight: bold; /* Bold text */
+}
+
+/* Additional styles for responsiveness */
+@media (max-width: 600px) {
+  #difference-display {
+      font-size: 2em; /* Smaller font size on smaller screens */
+  }
+}
