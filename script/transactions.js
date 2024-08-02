@@ -22,15 +22,16 @@ document.querySelectorAll('input[name="transactionType"]').forEach(radio => {
 
 
 function initializeFirestore() {
-    const firebaseConfig = {
-      apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
-      authDomain: "capstone-project-7ec2d.firebaseapp.com",
-      databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
-      projectId: "capstone-project-7ec2d",
-      storageBucket: "capstone-project-7ec2d.appspot.com",
-      messagingSenderId: "734534479783",
-      appId: "1:734534479783:web:fe0190f54699a23bbdd082"
-    };
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyD_kUpbp349u2AvKsbFLwbLwhnjTPCZndA",
+    authDomain: "mypwa-5fb18.firebaseapp.com",
+    projectId: "mypwa-5fb18",
+    storageBucket: "mypwa-5fb18.appspot.com",
+    messagingSenderId: "662572084401",
+    appId: "1:662572084401:web:dff7781d5ba43531fe0690",
+    measurementId: "G-DJPD4RB8BN"
+};
   
     const app = initializeApp(firebaseConfig);
     return getFirestore(app);
@@ -316,21 +317,26 @@ async function compareExpenditures() {
   const now = new Date();
   const currentMonthExpenses = await fetchExpensesByMonth(now.getFullYear(), now.getMonth());
   const previousMonthExpenses = await fetchExpensesByMonth(now.getFullYear(), now.getMonth() - 1);
-
   const currentMonthTotal = calculateTotalExpenditure(currentMonthExpenses);
   const previousMonthTotal = calculateTotalExpenditure(previousMonthExpenses);
-
   const difference = currentMonthTotal - previousMonthTotal;
-
+  const badgeDocRef = doc(db, 'badge', 'ScsCz6FvoKZdWRCvv4vs'); 
+  try {
+    await updateDoc(badgeDocRef, { difference });
+    console.log("Difference updated in Firestore");
+  } catch (e) {
+    console.error("Error updating difference in Firestore: ", e);
+  }
   document.getElementById('current-month-total').textContent = `Current Month: $${currentMonthTotal.toFixed(2)}`;
   document.getElementById('previous-month-total').textContent = `Previous Month: $${previousMonthTotal.toFixed(2)}`;
   if (difference >= 0) {
     document.getElementById('expenditure-comparison').textContent = `You have $${difference.toFixed(2)} to cross your previous month expenditure`;
   } else {
-    document.getElementById('expenditure-comparison').textContent = `You have crossed $${difference.toFixed(2)} than your previous month expenditure`;
+    document.getElementById('expenditure-comparison').textContent = `You have crossed $${Math.abs(difference).toFixed(2)} than your previous month expenditure`;
   }
   renderExpenditureChart(currentMonthTotal, previousMonthTotal);
 }
+
 
 async function renderExpenditureChart() {  
   const now = new Date();
