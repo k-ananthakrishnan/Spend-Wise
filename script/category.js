@@ -53,7 +53,48 @@ async function fetchExpensesSum(categoryName) {
 }
 
 
-function createTile(iconClass, categoryName, categoryId, limit, exceededLimit) {
+
+
+async function loadCategories() {
+  const categoryContainer = document.querySelector('.category-container');
+  categoryContainer.innerHTML = ''; // Clear existing categories
+
+  const q = query(collection(db, 'categories'), orderBy('count'));
+  const querySnapshot = await getDocs(q);
+
+  const tileRow1 = document.createElement('div');
+  tileRow1.classList.add('tile-row');
+  const tileRow2 = document.createElement('div');
+  tileRow2.classList.add('tile-row');
+
+  let isRow1 = true;
+  for (const doc of querySnapshot.docs) {
+    const data = doc.data();
+    const limit = data.limit;
+    const categoryName = data.categoryName;
+    const categoryId = doc.id;
+
+    // Fetch the sum of expenses for the category
+    const sum = await fetchExpensesSum(categoryName);
+    const exceeded75Percent = (sum / limit) > 0.75;
+    const exceeded100Percent = (sum / limit) > 1;
+
+    const tile = createTile(data.iconClass, categoryName, categoryId, limit, exceeded75Percent, exceeded100Percent);
+
+    if (isRow1) {
+      tileRow1.appendChild(tile);
+    } else {
+      tileRow2.appendChild(tile);
+    }
+
+    isRow1 = !isRow1;
+  }
+
+  categoryContainer.appendChild(tileRow1);
+  categoryContainer.appendChild(tileRow2);
+}
+
+function createTile(iconClass, categoryName, categoryId, limit, exceeded75Percent, exceeded100Percent) {
   const tile = document.createElement('div');
   tile.classList.add('tile');
   tile.dataset.categoryId = categoryId;
@@ -79,7 +120,12 @@ function createTile(iconClass, categoryName, categoryId, limit, exceededLimit) {
   limitLabel.textContent = `Limit: $${limit}`;
   infoContainer.appendChild(limitLabel);
 
-  if (exceededLimit) {
+  if (exceeded100Percent) {
+    const warningMsg = document.createElement('p');
+    warningMsg.classList.add('warning-msg');
+    warningMsg.textContent = `Critical Warning: You have exceeded 100% of your limit!`;
+    infoContainer.appendChild(warningMsg);
+  } else if (exceeded75Percent) {
     const warningMsg = document.createElement('p');
     warningMsg.classList.add('warning-msg');
     warningMsg.textContent = `Warning: You have exceeded 75% of your limit!`;
@@ -96,44 +142,6 @@ function createTile(iconClass, categoryName, categoryId, limit, exceededLimit) {
   return tile;
 }
 
-
-async function loadCategories() {
-  const categoryContainer = document.querySelector('.category-container');
-  categoryContainer.innerHTML = ''; // Clear existing categories
-
-  const q = query(collection(db, 'categories'), orderBy('count'));
-  const querySnapshot = await getDocs(q);
-
-  const tileRow1 = document.createElement('div');
-  tileRow1.classList.add('tile-row');
-  const tileRow2 = document.createElement('div');
-  tileRow2.classList.add('tile-row');
-
-  let isRow1 = true;
-  for (const doc of querySnapshot.docs) {
-    const data = doc.data();
-    const limit = data.limit;
-    const categoryName = data.categoryName;
-    const categoryId = doc.id;
-
-    // Fetch the sum of expenses for the category
-    const sum = await fetchExpensesSum(categoryName);
-    const exceededLimit = (sum / limit) > 0.75;
-
-    const tile = createTile(data.iconClass, categoryName, categoryId, limit, exceededLimit);
-
-    if (isRow1) {
-      tileRow1.appendChild(tile);
-    } else {
-      tileRow2.appendChild(tile);
-    }
-
-    isRow1 = !isRow1;
-  }
-
-  categoryContainer.appendChild(tileRow1);
-  categoryContainer.appendChild(tileRow2);
-}
 
 document.getElementById('addButton').addEventListener('click', function () {
   formContainer.style.display = 'block';

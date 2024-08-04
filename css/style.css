@@ -244,6 +244,9 @@ font-size: 18px; ;
   flex-direction: column;
 }
 
+.category{
+  margin-bottom: 105px;
+}
 .category-name {
   margin: 0 0 1px 0;
   font-weight: bold;
@@ -363,6 +366,8 @@ font-size: 18px; ;
 
 .content {
   padding: 20px;
+  padding-bottom: 80px; /* Ensure there's enough space for the tabs */
+  box-sizing: border-box;
 }
 
 .tabs {
@@ -373,12 +378,13 @@ font-size: 18px; ;
   display: flex;
   justify-content: space-around;
   background-color: #ffffff;
-  color: white;
+  color: black; /* Changed to black for better contrast */
   font-size: 18px;
   font-weight: bold;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  border-top-left-radius: 10px ;
-  border-top-right-radius: 10px ;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 1000; /* Ensure tabs are above other content */
 }
 
 .warning-msg {
@@ -386,7 +392,6 @@ font-size: 18px; ;
   font-size: 0.9em;
   margin-top: 5px;
 }
-
 
 .tabs a {
   text-decoration: none;
