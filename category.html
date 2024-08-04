@@ -23,6 +23,7 @@
     <link rel="manifest" href="/manifest.json" />
     </head>
 <body>
+    <div style="padding-bottom: 3px; ;">
     <header>
         <div class="app-name">
             <img class="money-img" src="spenwise-tab.webp" alt="money">
@@ -31,7 +32,9 @@
     </header>
     <div class="category">
      <div id="category-container" class="category-container"></div>
+     <div>
      <p id="addBtn" class="category-title">New <i id="addButton" class="fa-solid fa-plus"></i></p>
+    </div>
     </div>
     <div id="add-category-dialog" class="floating-dialog">
         <h4 id="category-dialog-title">Category Name</h4>
@@ -62,7 +65,7 @@
                 <button id="closeForm" class="mdl-button close">CLOSE</button>
             </div>
         </div>
-    </div>
+    </div></div>
     <div class="tabs">
         <a href="index.html" >Home</a>
         <a style="border-top: 2px solid rgb(0, 98, 255);" href="category.html">Categories</a>
