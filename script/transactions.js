@@ -92,7 +92,6 @@ async function addExpense(expense) {
     const docRef = await addDoc(collection(db, 'expenses'), expense);
     console.log("Document written with ID: ", docRef.id);
 
-    // Update category sum if it's a debit transaction
     if (expense.transactionType === 'debit' && expense.category) {
       await updateCategorySum(expense.category, expense.amount);
     }
@@ -229,7 +228,7 @@ async function fetchCategoriesWithLimits() {
     categories.push({
       id: doc.id,
       categoryName: data.categoryName,
-      limit: data.limit, // Ensure 'limit' is the correct field name
+      limit: data.limit, 
     });
   });
   return categories;
