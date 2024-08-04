@@ -251,10 +251,6 @@ async function checkCategoryLimits(categoryData) {
   });
 }
 
-function displayWarning(message) {
-  console.log(message);
-}
-
 function checkMonthChange() {
   const now = new Date();
   const currentDay = now.getDate();
