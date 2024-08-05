@@ -6,7 +6,8 @@
         <title>Spend Wise</title>
         <link rel="stylesheet" href="./css/material.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="css/style.css">
+        <!-- <link rel="stylesheet" href="css/style.css"> -->
+        <link id="theme-stylesheet" rel="stylesheet" href="cssstyle.css">
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <script src="./script/login.js" defer type="module"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -94,4 +95,13 @@
         <a href="statistics.html">Statistics</a>
     </div>
 </body>
+<script type="module" src="/theme-toggle.js"></script>
 </html>
+
+
+<div class="header-content">
+    <!-- <h1>Spend Wise</h1> -->
+    <button id="toggle-theme" class="theme-toggle-button" aria-label="Toggle theme">
+        <i class="fa-solid fa-sum"></i>
+    </button>
+</div>
