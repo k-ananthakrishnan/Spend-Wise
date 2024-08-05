@@ -138,13 +138,24 @@
         display: flex;
         justify-content: space-around;
         padding: 10px 0;
-        z-index: 2; /* Higher z-index to appear above other content */
+        z-index: 2;
     }
 
     .tabs a {
         color: #000;
         text-decoration: none;
         padding: 10px;
+    }
+    .financetip {
+        align-items: center;
+        padding: 10px;
+        margin: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ededed;
+        border-radius: 7px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out;
     }
 
     @media (max-width: 600px) {
@@ -198,6 +209,13 @@
     </div>
 
     <main class="mdl-layout__content">
+        <div id="financial-tip" class="financetip">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Financial Tip</h2>
+            </div>
+            <div id="tip-content" class="mdl-card__supporting-text">
+            </div>
+        </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
             <div class="mdl-tabs__tab-bar">
                 <a href="#tab1" class="mdl-tabs__tab is-active">Badge</a>
@@ -212,7 +230,7 @@
                           <div class="mdl-card__title">
                               <h2 class="mdl-card__title-text" id="badge-name">No Badge</h2>
                           </div>
-                          <img id="badge-image" src="" alt="Badge Image" style="width: 100%; height: auto;"/>
+                          <img id="badge-image" alt="Badge Image" style="width: 100%; height: auto;"/>
                           <div id="badge-difference" class="badge-difference">Difference: 0</div> 
                       </div>
                   </div>
@@ -226,6 +244,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
             <!-- Bottom Tabs -->
     <div class="tabs">
@@ -235,9 +254,7 @@
         <a href="statistics.html">Statistics</a>
     </div>
     </main>
-
-
-
+  </div>
     <!-- Material Design Lite JS -->
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <!-- Firebase JS SDK -->
@@ -367,11 +384,56 @@
     }
 }
 
+//
+document.addEventListener('DOMContentLoaded', () => {
+    const tips = [
+        "Set Clear Financial Goals: Define short-term and long-term financial goals.",
+        "Build an Emergency Fund: Save 3-6 months' worth of living expenses.",
+        "Track Your Spending: Use budgeting tools to monitor where your money is going.",
+        "Pay Yourself First: Automatically transfer a portion of your income to savings.",
+        "Avoid Impulse Purchases: Implement a 24-hour rule for non-essential purchases.",
+        "Review and Adjust Your Budget Regularly: Ensure it reflects your current needs.",
+        "Understand the Impact of Interest Rates: Make better financial decisions.",
+        "Take Advantage of Employer Benefits: Use retirement plans, HSAs, or educational assistance.",
+        "Diversify Your Investments: Spread investments across different asset classes.",
+        "Review Your Insurance Coverage: Ensure you have adequate coverage for health, auto, home, and life.",
+        "Plan for Taxes: Consider tax-efficient investment strategies and take advantage of deductions.",
+        "Educate Yourself About Personal Finance: Continuously learn through books and courses.",
+        "Build and Maintain Good Credit: Pay bills on time and monitor your credit report.",
+        "Plan for Major Life Events: Adjust your budget and savings for life changes.",
+        "Automate Bill Payments: Set up automatic payments to avoid late fees.",
+        "Use a Budgeting App: Manage expenses and track financial goals with apps like Mint or YNAB.",
+        "Avoid High-Interest Debt: Pay off high-interest debts quickly and avoid accruing more.",
+        "Invest in Your Education: Enhance your career prospects through courses and certifications.",
+        "Negotiate Your Bills: Seek discounts on services like internet or insurance.",
+        "Use Coupons and Discounts: Look for savings before making purchases.",
+        "Set Up Automatic Savings: Automate savings transfers to build your savings consistently.",
+        "Review Your Subscriptions: Cancel unused or unnecessary subscriptions to save money.",
+        "Plan for Retirement Early: Contribute to retirement accounts to benefit from compounding.",
+        "Save Windfalls: Allocate bonuses or gifts to savings or investments.",
+        "Understand Your Credit Report: Check your credit report regularly and address inaccuracies.",
+        "Invest in Index Funds: Consider low-cost index funds for diversified investing.",
+        "Create a Will and Estate Plan: Ensure your assets are distributed according to your wishes.",
+        "Educate Yourself About Taxes: Learn about tax-efficient strategies and deductions.",
+        "Use a Cash-Back Credit Card: Earn rewards on purchases with cash-back credit cards.",
+        "Set Financial Milestones: Break down goals into smaller milestones and celebrate progress."
+    ];
+
+    function getRandomTip() {
+        const randomIndex = Math.floor(Math.random() * tips.length);
+        return tips[randomIndex];
+    }
+
+    // Display a random financial tip when the page loads
+    const tipElement = document.getElementById('tip-content');
+    tipElement.textContent = getRandomTip();
+});
+
+//
 document.addEventListener('DOMContentLoaded', () => {
     printDifference();
 });
 
-        
-    </script>
+</script>
 </body>
 </html>
