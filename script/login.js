@@ -5,13 +5,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA31BnyL8BMRqZnlOAMKpj3v7pSSvwwVMM",
-    authDomain: "login-using-cdea5.firebaseapp.com",
-    projectId: "login-using-cdea5",
-    storageBucket: "login-using-cdea5.appspot.com",
-    messagingSenderId: "734426507176",
-    appId: "1:734426507176:web:b04e86999304f7501f1f9d",
-};
+    apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
+    authDomain: "capstone-project-7ec2d.firebaseapp.com",
+    databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
+    projectId: "capstone-project-7ec2d",
+    storageBucket: "capstone-project-7ec2d.appspot.com",
+    messagingSenderId: "734534479783",
+    appId: "1:734534479783:web:fe0190f54699a23bbdd082"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
