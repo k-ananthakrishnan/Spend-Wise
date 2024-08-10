@@ -21,13 +21,13 @@ document.querySelectorAll('input[name="transactionType"]').forEach(radio => {
 
 function initializeFirestore() {
   const firebaseConfig = {
-    apiKey: "AIzaSyD_kUpbp349u2AvKsbFLwbLwhnjTPCZndA",
-    authDomain: "mypwa-5fb18.firebaseapp.com",
-    projectId: "mypwa-5fb18",
-    storageBucket: "mypwa-5fb18.appspot.com",
-    messagingSenderId: "662572084401",
-    appId: "1:662572084401:web:dff7781d5ba43531fe0690",
-    measurementId: "G-DJPD4RB8BN"
+    apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
+    authDomain: "capstone-project-7ec2d.firebaseapp.com",
+    databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
+    projectId: "capstone-project-7ec2d",
+    storageBucket: "capstone-project-7ec2d.appspot.com",
+    messagingSenderId: "734534479783",
+    appId: "1:734534479783:web:fe0190f54699a23bbdd082"
   };
   
   const app = initializeApp(firebaseConfig);
@@ -113,7 +113,7 @@ async function updateCategorySum(categoryName, amount) {
   });
 }
 
-async function updateExpensesum(id, expense) {
+async function updateExpense(id, expense) {
   try {
     const expenseDoc = doc(db, 'expenses', id);
     await updateDoc(expenseDoc, expense);
@@ -259,15 +259,64 @@ function checkMonthChange() {
   const lastCheckedDateString = localStorage.getItem("lastCheckedDate");
 
   if (currentDay === 1 && (!lastCheckedDateString || new Date(lastCheckedDateString).getMonth() !== currentMonth || new Date(lastCheckedDateString).getFullYear() !== currentYear)) {
-    alert('Don\'t forget to review your expenses for the previous month!');
-    localStorage.setItem("lastCheckedDate", now.toISOString());
+      myMonthlyFunction(); 
+      localStorage.setItem("lastCheckedDate", now.toString());
   }
+}
+
+setInterval(checkMonthChange, 1000);
+
+async function myMonthlyFunction() {
+  const expenses = await fetchExpenses();
+
+  expenses.forEach(async (expense) => {
+      if (expense.recurring) {
+          const newTimestamp = new Date();
+
+          const recurringExpense = {
+              amount: expense.amount,
+              transactionType: expense.transactionType,
+              category: expense.category,
+              description: expense.description,
+              timestamp: newTimestamp,
+              recurring: false
+          };
+
+          try {
+              const docRef = await addDoc(collection(db, 'expenses'), recurringExpense);
+              console.log("Recurring expense added with ID: ", docRef.id);
+          } catch (e) {
+              console.error("Error adding recurring expense: ", e);
+          }
+      }
+  });
+}
+
+async function fetchExpensesByMonth(year, month) {
+  const startOfMonth = new Date(year, month, 1);
+  const endOfMonth = new Date(year, month + 1, 0, 23, 59, 59);
+
+  const q = query(
+    collection(db, 'expenses'),
+    where('timestamp', '>=', startOfMonth),
+    where('timestamp', '<=', endOfMonth),
+    orderBy('timestamp', 'desc')
+  );
+
+  const querySnapshot = await getDocs(q);
+  const expenses = [];
+  querySnapshot.forEach((doc) => {
+    expenses.push(doc.data());
+  });
+
+  return expenses;
 }
 
 function handleDialogSubmit() {
   const amount = parseFloat(document.getElementById('amount').value);
   const description = document.getElementById('description').value;
   const category = document.getElementById('category').value;
+  const recurring = document.getElementById('recurring').checked;
   const transactionType = document.querySelector('input[name="transactionType"]:checked').value;
 
   if (isNaN(amount) || amount <= 0) {
@@ -285,7 +334,8 @@ function handleDialogSubmit() {
     description,
     category: transactionType === 'debit' ? category : null,
     transactionType,
-    timestamp: new Date()
+    timestamp: new Date(),
+    recurring: recurring
   };
 
   if (selectedExpenseId) {

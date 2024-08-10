@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spend Wise</title>
     <link rel="stylesheet" href="./css/material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- <link rel="stylesheet" href="css/darkmode.css"> -->
-    <link id="theme-stylesheet" rel="stylesheet" href="cssstyle.css">
+    <link id="theme-stylesheet" rel="stylesheet" href="css/style.css">
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="./script/login.js" defer type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,27 +16,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/Icon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/Icon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/Icon/favicon-16x16.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-<link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/Icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Icon/favicon-16x16.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.json" />
 </head>
 
 <style>
-
-  
     .mdl-tabs {
         margin: 20px auto;
         max-width: 600px;
         position: relative;
         z-index: 1;
     }
-    .mdl-tabs__tab-bar {
-        background: #fff;
-    }
+
     .mdl-card {
         width: 100%;
         max-width: 400px;
@@ -45,34 +42,42 @@
         position: relative;
         z-index: 1;
     }
+
     .mdl-card__title {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .mdl-card__title-text {
         margin: 0;
     }
+
     .reward-item {
         margin: 10px 0;
     }
+
     .reward-link {
         text-decoration: none;
         color: #000;
         align-items: center;
     }
+
     .reward-image {
         width: 100px;
         height: auto;
         margin-right: 10px;
     }
+
     .reward-title {
         font-weight: bold;
         font-size: 1.5em;
     }
+
     .reward-description {
         font-size: 0.9em;
     }
+
     .badge-difference {
         font-size: 1.2em;
         font-weight: bold;
@@ -80,10 +85,24 @@
         margin-top: 15px;
         text-align: center;
     }
+
     .mdl-tabs__panel {
         padding: 20px;
         position: relative;
         z-index: 1;
+    }
+    .financetip {
+        bottom: 8px;
+        align-items: center;
+        padding: 10px;
+        /* margin: 10px; */
+        font-style: italic;
+        /* background-color: #ffffff; */
+        /* border: 1px solid #ededed; */
+        border-radius: 7px;
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
+        cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out;
     }
 
     .rewards-section {
@@ -121,243 +140,357 @@
         font-size: 0.9em;
         color: #666;
     }
+
+    .material-icons {
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+
+    body.dark-mode {
+        background-color: #121212;
+        color: white;
+    }
+
     @media (max-width: 600px) {
-       
+
         .mdl-tabs__tab {
             font-size: 0.9em;
             padding: 10px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 4px 16px 4px 16px;
+            margin: 10px;
         }
+
         .mdl-card {
             padding: 10px;
         }
+
         .reward-item {
             padding: 10px;
             width: 100%;
         }
+
         .reward-item img {
             width: 100%;
             max-width: 100%;
         }
-        .tabs a {
-            display: block;
-            padding: 10px;
-            font-size: 0.9em;
-        }
     }
-    
-   
 </style>
 
-
 <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Expense Tracker</span>
+                <div class="mdl-layout-spacer"></div>
 
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Expense Tracker</span>
-            <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <button id="logout-btn-large" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Settings</span>
+            <nav class="mdl-navigation">
+                <button id="logout-btn-small"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    style="margin-bottom: 8px;">
                     Logout
                 </button>
             </nav>
+            <nav>
+                <button id="toggle-theme"
+                    class="theme-toggle-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    aria-label="Toggle theme">
+                    <span id="theme-icon" class="material-icons">brightness_3</span>
+                    <span id="theme-text">Switch to Dark mode</span>
+                </button>
+            </nav>
         </div>
-    
-    </header>
-
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
-        <nav class="mdl-navigation">
-            <button id="logout-btn-small" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="margin-bottom: 8px;">
-                Logout
-            </button>
-        </nav>
-    </div>
-
-    <main class="mdl-layout__content">
-        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-            <div class="mdl-tabs__tab-bar">
-                <a href="#tab1" class="mdl-tabs__tab is-active">Badge</a>
-                <a href="#tab2" class="mdl-tabs__tab">Rewards</a>
+        <main class="mdl-layout__content">
+            <div style="margin-top: 20px; margin-bottom: 50px;">
+            <div class="comparison">
+                <div style="display: flex-row; gap: 25px;">
+                <p class="month-details" id="current-month-total"></p>
+                <p class="month-details" id="previous-month-total"></p>
+                <p id="expenditure-comparison"></p>
             </div>
-
-            <header>
-                <div class="header-content">
-                    <!-- <h1>Spend Wise</h1> -->
-                    <button id="toggle-theme" class="theme-toggle-button" aria-label="Toggle theme">
-                        <i class="fa-solid fa-sum"></i>
-                    </button>
+            </div>
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                <div class="mdl-tabs__tab-bar">
+                    <a href="#tab1" class="mdl-tabs__tab is-active">Badge</a>
+                    <a href="#tab2" class="mdl-tabs__tab">Rewards</a>
                 </div>
-            </header>
-           
-            <div class="mdl-tabs__panel is-active" id="tab1">
-              <div class="mdl-grid">
-                  <div class="mdl-cell mdl-cell--12-col">
-                      <h4>Your Badge</h4>
-                      <div id="badge-display" class="mdl-card mdl-shadow--2dp">
-                          <div class="mdl-card__title">
-                              <h2 class="mdl-card__title-text" id="badge-name">No Badge</h2>
-                          </div>
-                          <img id="badge-image" src="" alt="Badge Image" style="width: 100%; height: auto;"/>
-                          <div id="badge-difference" class="badge-difference">Difference: 0</div> 
-                      </div>
-                  </div>
-              </div>
-          </div>
-          
-            <div class="mdl-tabs__panel" id="tab2">
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--12-col">
-                        <div id="rewards-section" class="rewards-section"></div>
+                <div class="mdl-tabs__panel is-active" id="tab1">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <h4>Your Badge</h4>
+                            <div id="badge-display" class="mdl-card mdl-shadow--2dp">
+                                <div class="mdl-card__title">
+                                    <h2 class="mdl-card__title-text" id="badge-name">No Badge</h2>
+                                </div>
+                                <img id="badge-image" alt="Badge Image" style="width: 100%; height: auto;" />
+                                <div id="badge-difference" class="badge-difference">Difference: 0</div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="mdl-tabs__panel" id="tab2">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <div id="rewards-section" class="rewards-section"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="financial-tip" class="financetip">
+                <div class="mdl-card__title">
+                    <h5 class="mdl-card__title-text">Financial Tip</h5>
+                </div>
+                <div id="tip-content" class="mdl-card__supporting-text">
                 </div>
             </div>
         </div>
             <!-- Bottom Tabs -->
-    <div class="tabs">
-      <a  style="border-top: 2px solid rgb(0, 98, 255);" href="index.html">Home</a>
-        <a href="category.html">Categories</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="statistics.html">Statistics</a>
-    </div>
-    </main>
+            <div class="tabs">
+                <a style="border-top: 2px solid rgb(0, 98, 255);" href="index.html">Home</a>
+                <a href="category.html">Categories</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="statistics.html">Statistics</a>
+            </div>
+        </main>
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <!-- Firebase JS SDK -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+            import { addDoc, collection, doc, getDocs,getDoc, getFirestore, orderBy, query, updateDoc, where } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
 
+            //Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyBraAv342Or0Wr4D_bEl46grOmqgAX06Lo",
+                authDomain: "capstone-project-7ec2d.firebaseapp.com",
+                databaseURL: "https://capstone-project-7ec2d-default-rtdb.firebaseio.com",
+                projectId: "capstone-project-7ec2d",
+                storageBucket: "capstone-project-7ec2d.appspot.com",
+                messagingSenderId: "734534479783",
+                appId: "1:734534479783:web:fe0190f54699a23bbdd082"
+            };
 
+            document.getElementById('toggle-theme').addEventListener('click', function () {
+                const body = document.body;
+                const themeIcon = document.getElementById('theme-icon');
+                const themeText = document.getElementById('theme-text');
 
-    <!-- Material Design Lite JS -->
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <!-- Firebase JS SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-        import { doc, getDoc, getFirestore } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js";
+                body.classList.toggle('dark-mode');
 
-        //Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyD_kUpbp349u2AvKsbFLwbLwhnjTPCZndA",
-            authDomain: "mypwa-5fb18.firebaseapp.com",
-            projectId: "mypwa-5fb18",
-            storageBucket: "mypwa-5fb18.appspot.com",
-            messagingSenderId: "662572084401",
-            appId: "1:662572084401:web:dff7781d5ba43531fe0690",
-            measurementId: "G-DJPD4RB8BN"
-        };
+                if (body.classList.contains('dark-mode')) {
+                    themeIcon.textContent = 'wb_sunny'; 
+                    themeText.textContent = 'Switch to Light Mode';
+                } else {
+                    themeIcon.textContent = 'brightness_3'; 
+                    themeText.textContent = 'Switch to Dark Mode';
+                }
+            });
 
-      
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+            async function printDifference() {
+    const currentMonthExpenditure = 1200;  
+    const previousMonthExpenditure = 850; 
+    const difference = await compareExpenditures(currentMonthExpenditure, previousMonthExpenditure);
 
-        async function printDifference() {
-    const badgeDocRef = doc(db, 'badge', 'ScsCz6FvoKZdWRCvv4vs'); 
+    let badgeName, badgeImageUrl, rewardsHtml;
 
-    try {
-        const docSnap = await getDoc(badgeDocRef);
-
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            const difference = data.difference;
-            let badgeName, badgeImageUrl, rewardsHtml;
-
-            // Determine badge and rewards based on difference
-            if (difference < 0) {
-    badgeName = 'No Savings';
-    badgeImageUrl = 'assets/Badges/nosaving.jpeg';
-    rewardsHtml = `
-      <h2>Exclusive Rewards Await!</h2>
-      <div class="reward-item">
-          <a href="https://www.amazon.com/" target="_blank" class="reward-link">
-              <img src="assets/rewards/1.jpeg" alt="Financial Literacy" class="reward-image">
-              <div class="reward-title">Financial Literacy</div>
-              <div class="reward-description">Unlock discounts and offers tailored for our members. Enjoy premium access to special events and more.</div>
-          </a>
-      </div>
-    `;
-} else if (difference < 100) {
-    badgeName = 'Copper Badge';
-    badgeImageUrl = 'assets/Badges/copper.jpeg';
-    rewardsHtml = `
-      <h2> Rewards Just for You!</h2>
-      <div class="reward-item">
-          <a href="https://www.amazon.com/" target="_blank" class="reward-link">
-              <img src="assets/rewards/2.jpeg" alt="Beginner Savings Perks" class="reward-image">
-              <div class="reward-title">Beginner Savings Perks</div>
-              <div class="reward-description">Enjoy special discounts and offers designed for our Copper Badge members. Get started on your journey with exclusive deals.</div>
-          </a>
-      </div>
-    `;
-} else if (difference < 500) {
-    badgeName = 'Bronze Badge';
-    badgeImageUrl = 'assets/Badges/bronze.jpeg';
-    rewardsHtml = `
-      <h2>Exclusive Rewards Await!</h2>
-      <div class="reward-item">
-          <a href="https://www.cashbackmonitor.com/" target="_blank" class="reward-link">
-              <img src="assets/rewards/3.jpeg" alt="Cashback Bonanza" class="reward-image">
-              <div class="reward-title">Cashback Bonanza</div>
-              <div class="reward-description">Get up to 10% cashback on selected categories. Redeem your cashback or save it for future rewards.</div>
-          </a>
-      </div>
-    `;
-} else if (difference < 1000) {
-    badgeName = 'Silver Badge';
-    badgeImageUrl = 'assets/Badges/silver.jpeg';
-    rewardsHtml = `
-      <h2> Rewards Just for You!</h2>
-      <div class="reward-item">
-          <a href="https://www.referralcandy.com/" target="_blank" class="reward-link">
-              <img src="assets/rewards/4.jpeg" alt="Referral Bonus" class="reward-image">
-              <div class="reward-title">Referral Bonus</div>
-              <div class="reward-description">Refer friends and earn bonuses. For each sign-up, receive a bonus added to your account. Share and earn more!</div>
-          </a>
-      </div>
-    `;
-} else if (difference < 10000) {
-    badgeName = 'Golden Badge';
-    badgeImageUrl = 'assets/Badges/gold.jpeg';
-    rewardsHtml = `
-      <h2>Exclusive Rewards Await!</h2>
-      <div class="reward-item">
-          <a href="https://www.casinorewards.com/en/vip-program/" target="_blank" class="reward-link">
-              <img src="assets/rewards/6.jpeg" alt="VIP Access Pass" class="reward-image">
-              <div class="reward-title">VIP Access Pass</div>
-              <div class="reward-description">Gain early access to new features, beta programs, and special events. Enjoy exclusive VIP privileges.</div>
-          </a>
-      </div>
-    `;
-} else {
-    badgeName = 'Platinum Badge';
-    badgeImageUrl = 'assets/Badges/platinum.jpeg';
-    rewardsHtml = `
-      <h2>Exclusive Rewards Just for You!</h2>
-      <div class="reward-item">
-          <a href="https://www.luxurylifestyle.com/" target="_blank" class="reward-link">
-              <img src="assets/rewards/8.jpeg" alt="Luxury Lifestyle" class="reward-image">
-              <div class="reward-title">Luxury Lifestyle</div>
-              <div class="reward-description">Indulge in premium experiences with our exclusive lifestyle rewards. Enjoy high-end travel packages, gadgets, and more.</div>
-          </a>
-      </div>
-    `;
-}
-
-            // Update HTML with badge information and rewards
-            document.getElementById('badge-name').textContent = badgeName;
-            document.getElementById('badge-image').src = badgeImageUrl;
-            document.getElementById('badge-difference').textContent = `Difference: ${difference}`; // Update the difference value
-            document.getElementById('rewards-section').innerHTML = rewardsHtml;
-
-        } else {
-            console.log("No such document!");
-        }
-    } catch (error) {
-        console.error("Error getting document: ", error);
+    if (difference < 0) {
+        badgeName = 'No Savings';
+        badgeImageUrl = 'assets/Badges/nosaving.jpeg';
+        rewardsHtml = `
+            <h2>Exclusive Rewards Await!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards/" target="_blank" class="reward-link">
+                    <img src="assets/rewards/1.jpeg" alt="Financial Literacy" class="reward-image">
+                    <div class="reward-title">Financial Literacy</div>
+                    <div class="reward-description">Unlock discounts and offers tailored for our members. Enjoy premium access to special events and more.</div>
+                </a>
+            </div>
+        `;
+    } else if (difference < 100) {
+        badgeName = 'Copper Badge';
+        badgeImageUrl = 'assets/Badges/copper.jpeg';
+        rewardsHtml = `
+            <h2>Rewards Just for You!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards/" target="_blank" class="reward-link">
+                    <img src="assets/rewards/2.jpeg" alt="Beginner Savings Perks" class="reward-image">
+                    <div class="reward-title">Beginner Savings Perks</div>
+                    <div class="reward-description">Enjoy special discounts and offers designed for our Copper Badge members. Get started on your journey with exclusive deals.</div>
+                </a>
+            </div>
+        `;
+    } else if (difference < 500) {
+        badgeName = 'Bronze Badge';
+        badgeImageUrl = 'assets/Badges/bronze.jpeg';
+        rewardsHtml = `
+            <h2>Exclusive Rewards Await!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards//" target="_blank" class="reward-link">
+                    <img src="assets/rewards/3.jpeg" alt="Cashback Bonanza" class="reward-image">
+                    <div class="reward-title">Cashback Bonanza</div>
+                    <div class="reward-description">Get up to 10% cashback on selected categories. Redeem your cashback or save it for future rewards.</div>
+                </a>
+            </div>
+        `;
+    } else if (difference < 1000) {
+        badgeName = 'Silver Badge';
+        badgeImageUrl = 'assets/Badges/silver.jpeg';
+        rewardsHtml = `
+            <h2>Rewards Just for You!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards/" target="_blank" class="reward-link">
+                    <img src="assets/rewards/4.jpeg" alt="Referral Bonus" class="reward-image">
+                    <div class="reward-title">Referral Bonus</div>
+                    <div class="reward-description">Refer friends and earn bonuses. For each sign-up, receive a bonus added to your account. Share and earn more!</div>
+                </a>
+            </div>
+        `;
+    } else if (difference < 10000) {
+        badgeName = 'Golden Badge';
+        badgeImageUrl = 'assets/Badges/gold.jpeg';
+        rewardsHtml = `
+            <h2>Exclusive Rewards Await!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards/" target="_blank" class="reward-link">
+                    <img src="assets/rewards/6.jpeg" alt="VIP Access Pass" class="reward-image">
+                    <div class="reward-title">VIP Access Pass</div>
+                    <div class="reward-description">Gain early access to new features, beta programs, and special events. Enjoy exclusive VIP privileges.</div>
+                </a>
+            </div>
+        `;
+    } else {
+        badgeName = 'Platinum Badge';
+        badgeImageUrl = 'assets/Badges/platinum.jpeg';
+        rewardsHtml = `
+            <h2>Exclusive Rewards Just for You!</h2>
+            <div class="reward-item">
+                <a href="https://www.rbcroyalbank.com/rbcrewards/" target="_blank" class="reward-link">
+                    <img src="assets/rewards/8.jpeg" alt="Luxury Lifestyle" class="reward-image">
+                    <div class="reward-title">Luxury Lifestyle</div>
+                    <div class="reward-description">Indulge in premium experiences with our exclusive lifestyle rewards. Enjoy high-end travel packages, gadgets, and more.</div>
+                </a>
+            </div>
+        `;
     }
+
+    // Update HTML with badge information and rewards
+    document.getElementById('badge-name').textContent = badgeName;
+    document.getElementById('badge-image').src = badgeImageUrl;
+    document.getElementById('badge-difference').textContent = `Monthly Difference: ${difference}`; // Update the difference value
+    document.getElementById('rewards-section').innerHTML = rewardsHtml;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    printDifference();
-});
+            //
+            document.addEventListener('DOMContentLoaded', () => {
+                const tips = [
+                    "Set Clear Financial Goals: Define short-term and long-term financial goals.",
+                    "Build an Emergency Fund: Save 3-6 months' worth of living expenses.",
+                    "Track Your Spending: Use budgeting tools to monitor where your money is going.",
+                    "Pay Yourself First: Automatically transfer a portion of your income to savings.",
+                    "Avoid Impulse Purchases: Implement a 24-hour rule for non-essential purchases.",
+                    "Review and Adjust Your Budget Regularly: Ensure it reflects your current needs.",
+                    "Understand the Impact of Interest Rates: Make better financial decisions.",
+                    "Take Advantage of Employer Benefits: Use retirement plans, HSAs, or educational assistance.",
+                    "Diversify Your Investments: Spread investments across different asset classes.",
+                    "Review Your Insurance Coverage: Ensure you have adequate coverage for health, auto, home, and life.",
+                    "Plan for Taxes: Consider tax-efficient investment strategies and take advantage of deductions.",
+                    "Educate Yourself About Personal Finance: Continuously learn through books and courses.",
+                    "Build and Maintain Good Credit: Pay bills on time and monitor your credit report.",
+                    "Plan for Major Life Events: Adjust your budget and savings for life changes.",
+                    "Automate Bill Payments: Set up automatic payments to avoid late fees.",
+                    "Use a Budgeting App: Manage expenses and track financial goals with apps like Mint or YNAB.",
+                    "Avoid High-Interest Debt: Pay off high-interest debts quickly and avoid accruing more.",
+                    "Invest in Your Education: Enhance your career prospects through courses and certifications.",
+                    "Negotiate Your Bills: Seek discounts on services like internet or insurance.",
+                    "Use Coupons and Discounts: Look for savings before making purchases.",
+                    "Set Up Automatic Savings: Automate savings transfers to build your savings consistently.",
+                    "Review Your Subscriptions: Cancel unused or unnecessary subscriptions to save money.",
+                    "Plan for Retirement Early: Contribute to retirement accounts to benefit from compounding.",
+                    "Save Windfalls: Allocate bonuses or gifts to savings or investments.",
+                    "Understand Your Credit Report: Check your credit report regularly and address inaccuracies.",
+                    "Invest in Index Funds: Consider low-cost index funds for diversified investing.",
+                    "Create a Will and Estate Plan: Ensure your assets are distributed according to your wishes.",
+                    "Educate Yourself About Taxes: Learn about tax-efficient strategies and deductions.",
+                    "Use a Cash-Back Credit Card: Earn rewards on purchases with cash-back credit cards.",
+                    "Set Financial Milestones: Break down goals into smaller milestones and celebrate progress."
+                ];
 
-        
-    </script>
+                function getRandomTip() {
+                    const randomIndex = Math.floor(Math.random() * tips.length);
+                    return tips[randomIndex];
+                }
+
+                // Display a random financial tip when the page loads
+                const tipElement = document.getElementById('tip-content');
+                tipElement.textContent = getRandomTip();
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                printDifference();
+            });
+            //difference
+  async function fetchExpensesByMonth(year, month) {
+  const startOfMonth = new Date(year, month, 1);
+  const endOfMonth = new Date(year, month + 1, 0, 23, 59, 59);
+
+  const q = query(
+    collection(db, 'expenses'),
+    where('timestamp', '>=', startOfMonth),
+    where('timestamp', '<=', endOfMonth),
+    orderBy('timestamp', 'desc')
+  );
+
+  const querySnapshot = await getDocs(q);
+  const expenses = [];
+  querySnapshot.forEach((doc) => {
+    expenses.push(doc.data());
+  });
+
+  return expenses;
+}
+function calculateTotalExpenditure(expenses) {
+    return expenses.reduce((total, expense) => {
+      return total + (expense.transactionType === 'credit' ? expense.amount : -expense.amount);
+    }, 0);
+  }
+
+async function compareExpenditures() {
+  const now = new Date();
+  const currentMonthExpenses = await fetchExpensesByMonth(now.getFullYear(), now.getMonth());
+  const previousMonthExpenses = await fetchExpensesByMonth(now.getFullYear(), now.getMonth() - 1);
+
+  const currentMonthTotal = calculateTotalExpenditure(currentMonthExpenses);
+  const previousMonthTotal = calculateTotalExpenditure(previousMonthExpenses);
+
+  const difference = currentMonthTotal - previousMonthTotal;
+
+  document.getElementById('current-month-total').textContent = `Current Month:      $${currentMonthTotal.toFixed(2)}`;
+  document.getElementById('previous-month-total').textContent = `Previous Month: $${previousMonthTotal.toFixed(2)}`;
+  if (difference >= 0) {
+    document.getElementById('expenditure-comparison').textContent = `You have  saved $${difference.toFixed(2)} compared to your previous month`;
+  } else {
+    document.getElementById('expenditure-comparison').textContent = `You have crossed $${difference.toFixed(2)} than your previous month expenditure`;
+  }
+  return difference;
+  return {
+    currentMonthTotal,
+    previousMonthTotal,
+
+  };
+}
+document.addEventListener('DOMContentLoaded', async () => {
+    await compareExpenditures();
+
+  });
+
+        </script>
 </body>
+
 </html>

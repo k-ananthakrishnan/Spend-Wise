@@ -63,7 +63,12 @@ width: auto;
   color: #ffffff;
   width: fit-content;
 }
-
+.month-details{
+  font-size: 30px;
+}
+.mdl-tabs__tab-bar{
+  gap: 10px;
+}
 .fab-container {
   position: fixed;
   bottom: 80px;
@@ -92,7 +97,7 @@ width: auto;
   line-height: 1.4; 
 }
 .comparison {
-  padding: 10px;
+  padding: 15px;
   margin: 5px 15px 5px 15px;
   background-color: #ffffff;
   border: 0px;
@@ -100,12 +105,20 @@ width: auto;
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out;
   position: relative; 
+  background-color: #ffffff; 
+  border: 1px solid #ededed;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .comparison p{
   font-weight: bold;
 
 }
-
+.warning-msg {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
 .expense {
   padding: 5px;
   margin: 5px 15px 5px 15px;
@@ -123,6 +136,7 @@ width: auto;
 }
 .expense-amount-type .credit {
   color: #27ae60; /* Green for credit */
+  
 }
 
 .expense-amount-type .debit {

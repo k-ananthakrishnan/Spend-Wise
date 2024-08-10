@@ -25,13 +25,34 @@
     <link rel="manifest" href="/manifest.json" />
     </head>
 <body>
-    <div style="padding-bottom: 3px; ;">
-    <header>
-        <div class="app-name">
-            <img class="money-img" src="spenwise-tab.webp" alt="money">
-            <span class="app-name-text">SPEND WISE</span>
-        </div>
-    </header>
+
+        <div style="position: fixed;" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header  style="position: fixed; top: 0; margin-bottom: 10px;" class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Expense Tracker</span>
+                    <div class="mdl-layout-spacer"></div>
+
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Settings</span>
+                <nav class="mdl-navigation">
+                    <button id="logout-btn-small"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                        style="margin-bottom: 8px;">
+                        Logout
+                    </button>
+                </nav>
+                <nav>
+                    <button id="toggle-theme"
+                        class="theme-toggle-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                        aria-label="Toggle theme">
+                        <span id="theme-icon" class="material-icons">brightness_3</span>
+                        <span id="theme-text">Switch to Dark mode</span>
+                    </button>
+                </nav>
+            </div>
+   <div style="margin-top: 55px; margin-bottom: 50px;">
     <div class="category">
      <div id="category-container" class="category-container"></div>
      <div>
@@ -68,6 +89,7 @@
             </div>
         </div>
     </div></div>
+    </div>
     <div class="tabs">
         <a href="index.html" >Home</a>
         <a style="border-top: 2px solid rgb(0, 98, 255);" href="category.html">Categories</a>
